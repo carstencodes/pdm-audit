@@ -7,9 +7,13 @@ from pathlib import Path
 from typing import Final
 
 from pdm.cli.commands.base import BaseCommand
+from pdm import core
 from pdm.project import Project
+from pdm_pfsc.logging import traced_function, logger, \
+    update_logger_from_project_ui, setup_logger
 
-from .executor import PipAuditExecutor, PdmExportDependenciesExecutor
+from .executor import PipAuditExecutor, PdmExportDependenciesExecutor, \
+    Executor, ExecutionError
 
 
 class AuditCommand(BaseCommand):
@@ -32,7 +36,7 @@ class AuditCommand(BaseCommand):
         parser.add_argument("auditor_arguments",
                             nargs="*",
                             default=[],
-                            help="Arguments passed to pip-audit - should be preceded by --\n" 
+                            help="Arguments passed to pip-audit - should be preceded by --\n"
                             "The arguments to apply to maybe\n"
                             "     -S/--strict\n"
                             "     -l/--local\n"
@@ -57,6 +61,11 @@ class AuditCommand(BaseCommand):
         -------
 
         """
+        # This will not handling tracing or related parts
+        # Should be evaluated at start-up time
+        if hasattr(options, "verbose"):
+            setup_logger(options.verbose)
+        update_logger_from_project_ui(project.core.ui)
 
         args = tuple(options.auditor_arguments or [])
         auditor: Auditor = Auditor()
@@ -74,16 +83,27 @@ def _cwd(path: Path) -> Iterator[None]:
 
 
 class Auditor:
+    @traced_function
     def audit(self, project: Project, *args: str) -> None:
         with _cwd(project.root):
-            with tempfile.NamedTemporaryFile(suffix="req.txt", prefix="pdm_audit") as req_file:
+            logger.info("Auditing packages installed by PDM ...")
+            with tempfile.NamedTemporaryFile(
+                suffix="req.txt",
+                prefix="pdm_audit",
+            ) as req_file:
+                logger.debug("Exporting requirements.txt file from PDM")
                 req_file_path: Path = Path(req_file.name).resolve()
-                export: PdmExportDependenciesExecutor = PdmExportDependenciesExecutor(req_file_path)
-                audit: PipAuditExecutor = PipAuditExecutor(req_file_path, *args)
+                export: Executor = PdmExportDependenciesExecutor(req_file_path)
+                audit: Executor = PipAuditExecutor(req_file_path, *args)
 
-                result: int = export.execute()
-                if result != 0:
-                    raise SystemError("Export failed")
-                result = audit.execute()
-                if result != 0:
-                    raise SystemError("Audit failed")
+                try:
+                    Executor.execute_chain(
+                        export,
+                        audit
+                    )
+                except ExecutionError as e:
+                    logger.exception(
+                        "Auditing failed.",
+                        exc_info=e,
+                        stack_info=False,
+                    )
