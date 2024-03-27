@@ -2,15 +2,16 @@ from abc import abstractmethod, ABC
 from pathlib import Path
 from typing import Optional
 
-from .proc import CliRunnerMixin
+from pdm_pfsc.proc import CliRunnerMixin
 
-class Executor(ABC, CliRunnerMixin):
+
+class Executor(ABC):
     @abstractmethod
     def execute(self) -> int:
         raise NotImplementedError()
 
 
-class PdmExportDependenciesExecutor(Executor):
+class PdmExportDependenciesExecutor(Executor, CliRunnerMixin):
     def __init__(self, out_file: Path) -> None:
         self.__out_file = out_file
 
@@ -28,7 +29,7 @@ class PdmExportDependenciesExecutor(Executor):
         return exit_code
 
 
-class PipAuditExecutor(Executor):
+class PipAuditExecutor(Executor, CliRunnerMixin):
     def __init__(self, input_file: Path, *args: str) -> None:
         self.__input_file = input_file
         self.__args = args
