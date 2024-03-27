@@ -2,6 +2,7 @@ from abc import abstractmethod, ABC
 from pathlib import Path
 from typing import Optional
 
+from pdm_pfsc.logging import traced_function, logger
 from pdm_pfsc.proc import CliRunnerMixin
 
 
@@ -27,6 +28,7 @@ class Executor(ABC):
 
     @abstractmethod
     def execute(self) -> int:
+        """"""
         raise NotImplementedError()
 
     @staticmethod
@@ -56,13 +58,22 @@ class PdmExportDependenciesExecutor(Executor, CliRunnerMixin):
         """"""
         return self.__out_file
 
+    @traced_function
     def execute(self) -> int:
         """"""
         pdm: Optional[Path] = self._which("pdm")
         if pdm is None:
             return -1
 
-        exit_code, _, _ = self.run(pdm, ("export", "-f", "requirements", "-G", ":all", "-o", str(self.out_file)))
+        exit_code, _, _ = self.run(pdm, (
+            "export",
+            "-f",
+            "requirements",
+            "-G",
+            ":all",
+            "-o",
+            str(self.out_file)),
+        )
 
         return exit_code
 
@@ -94,6 +105,7 @@ class PipAuditExecutor(Executor, CliRunnerMixin):
         """"""
         return self.__args
 
+    @traced_function
     def execute(self) -> int:
         """"""
         pip_audit: Path = self._which("pip-audit")
@@ -111,6 +123,14 @@ class PipAuditExecutor(Executor, CliRunnerMixin):
 
         arg_items = tuple(arguments)
 
-        exit_code, _, _ = self.run(pip_audit, arg_items)
+        exit_code, stdout, stderr = self.run(pip_audit, arg_items)
+
+        if exit_code == 0:
+            if len(stdout) > 0:
+                logger.info(stdout)
+            else:
+                logger.info("0 vulnerabilities found.")
+        else:
+            logger.warning(stderr)
 
         return exit_code
