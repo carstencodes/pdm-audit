@@ -1,9 +1,9 @@
 [project]
 name = "pdm-audit"
-version = "0.1.0"
+version = "0.2.0"
 description = "A plug-in running a security audit when installing packages"
 authors = [
-    {name = "Carsten Igel",email = "cig@bite-that-bit.de"},
+    { name = "Carsten Igel", email = "cig@bite-that-bit.de" },
 ]
 dependencies = [
     "pdm>=2.12.4",
@@ -24,12 +24,14 @@ paths = [
 [project.urls]
 homepage = "https://github.com/carstencodes/pdm-audit"
 
-[build-system]
-requires = ["pdm-backend"]
-build-backend = "pdm.backend"
-
 [project.entry-points.pdm]
 pdm-audit = "pdm_audit:main"
+
+[build-system]
+requires = [
+    "pdm-backend",
+]
+build-backend = "pdm.backend"
 
 [tool.pdm]
 distribution = true
