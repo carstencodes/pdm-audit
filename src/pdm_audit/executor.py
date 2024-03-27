@@ -5,10 +5,36 @@ from typing import Optional
 from pdm_pfsc.proc import CliRunnerMixin
 
 
+class ExecutionError(Exception):
+    def __init__(self, executor: "Executor") -> None:
+        message = f"Failed to execute {executor.name}: {executor.description}"
+        super().__init__(message)
+
+
 class Executor(ABC):
+    """"""
+    @property
+    @abstractmethod
+    def name(self) -> str:
+        """"""
+        raise NotImplementedError()
+
+    @property
+    @abstractmethod
+    def description(self) -> str:
+        """"""
+        raise NotImplementedError()
+
     @abstractmethod
     def execute(self) -> int:
         raise NotImplementedError()
+
+    @staticmethod
+    def execute_chain(*executors: "Executor") -> None:
+        """"""
+        for executor in executors:
+            if executor.execute() != 0:
+                raise ExecutionError(executor)
 
 
 class PdmExportDependenciesExecutor(Executor, CliRunnerMixin):
@@ -16,10 +42,22 @@ class PdmExportDependenciesExecutor(Executor, CliRunnerMixin):
         self.__out_file = out_file
 
     @property
+    def name(self) -> str:
+        """"""
+        return "Export"
+
+    @property
+    def description(self) -> str:
+        """"""
+        return f"Export dependencies to {self.out_file}"
+
+    @property
     def out_file(self) -> Path:
+        """"""
         return self.__out_file
 
     def execute(self) -> int:
+        """"""
         pdm: Optional[Path] = self._which("pdm")
         if pdm is None:
             return -1
@@ -30,19 +68,34 @@ class PdmExportDependenciesExecutor(Executor, CliRunnerMixin):
 
 
 class PipAuditExecutor(Executor, CliRunnerMixin):
+    """"""
     def __init__(self, input_file: Path, *args: str) -> None:
+        """"""
         self.__input_file = input_file
         self.__args = args
 
     @property
+    def name(self) -> str:
+        """"""
+        return "Auditor"
+
+    @property
+    def description(self) -> str:
+        """"""
+        return f"Running pip-audit on exported file: {self.__input_file}"
+
+    @property
     def input_file(self) -> Path:
+        """"""
         return self.__input_file
 
     @property
     def args(self) -> tuple[str, ...]:
+        """"""
         return self.__args
 
     def execute(self) -> int:
+        """"""
         pip_audit: Path = self._which("pip-audit")
         if pip_audit is None:
             return -1
