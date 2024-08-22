@@ -5,7 +5,7 @@
 groups = ["default"]
 strategy = ["inherit_metadata"]
 lock_version = "4.5.0"
-content_hash = "sha256:e27b18631dbd67be072d4d475b33b6904db4fc30c870a5eb6d0e71291ac4f4af"
+content_hash = "sha256:5f75214d4ef12b13fb47ee9c6ce7ea908d16b4c43d93f4a27b010c03543e5971"
 
 [[metadata.targets]]
 requires_python = ">=3.9"
@@ -559,13 +559,13 @@ files = [
 
 [[package]]
 name = "pip"
-version = "24.0"
-requires_python = ">=3.7"
+version = "24.2"
+requires_python = ">=3.8"
 summary = "The PyPA recommended tool for installing Python packages."
 groups = ["default"]
 files = [
-    {file = "pip-24.0-py3-none-any.whl", hash = "sha256:ba0d021a166865d2265246961bec0152ff124de910c5cc39f1156ce3fa7c69dc"},
-    {file = "pip-24.0.tar.gz", hash = "sha256:ea9bd1a847e8c5774a5777bb398c19e80bcd4e2aa16a4b301b718fe6f593aba2"},
+    {file = "pip-24.2-py3-none-any.whl", hash = "sha256:2cd581cf58ab7fcfca4ce8efa6dcacd0de5bf8d0a3eb9ec927e07405f4d9e2a2"},
+    {file = "pip-24.2.tar.gz", hash = "sha256:5b5e490b5e9cb275c879595064adce9ebd31b854e3e803740b72f9ccf34a45b8"},
 ]
 
 [[package]]
