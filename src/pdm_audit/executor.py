@@ -5,6 +5,8 @@ from typing import Optional
 from pdm_pfsc.logging import traced_function, logger
 from pdm_pfsc.proc import CliRunnerMixin
 
+from .updates import get_dependencies
+
 
 class ExecutionError(Exception):
     def __init__(self, executor: "Executor") -> None:
@@ -80,10 +82,11 @@ class PdmExportDependenciesExecutor(Executor, CliRunnerMixin):
 
 class PipAuditExecutor(Executor, CliRunnerMixin):
     """"""
-    def __init__(self, input_file: Path, *args: str) -> None:
+    def __init__(self, input_file: Path, verbose: bool = False, *args: str) -> None:
         """"""
         self.__input_file = input_file
         self.__args = args
+        self.__verbose = verbose
 
     @property
     def name(self) -> str:
@@ -118,6 +121,8 @@ class PipAuditExecutor(Executor, CliRunnerMixin):
         arguments.append("--skip-editable")
         arguments.append("--progress-spinner")
         arguments.append("off")
+        arguments.append("--format")
+        arguments.append("json")
         arguments.append("--requirement")
         arguments.append(str(self.input_file))
 
@@ -133,7 +138,15 @@ class PipAuditExecutor(Executor, CliRunnerMixin):
             exit_code_has_vulnerabilities
         ):
             if len(stdout) > 0:
-                logger.info(stdout)
+                d = get_dependencies(stdout)
+                if d is not None:
+                    num_vulnerabilities = self._get_number_of_vulnerabilities(
+                        d, self.__verbose)
+                    logger.warning("%i vulnerabilities found", num_vulnerabilities)
+                else:
+                    logger.warning("Failed to get dependencies with vulnerabilities")
+            elif exit_code == exit_code_has_vulnerabilities:
+                logger.warning("Vulnerable packages found. Failed to get details")
             else:
                 logger.info("0 vulnerabilities found.")
 
@@ -142,3 +155,34 @@ class PipAuditExecutor(Executor, CliRunnerMixin):
             logger.warning(stderr)
 
         return exit_code
+
+    def _get_number_of_vulnerabilities(self, dependencies, log_vulnerabilities=False):
+        def get_vulnerability_id(vuln) -> str:
+            if len(vuln.aliases) > 0:
+                return f"{vuln.id},{','.join(vuln.aliases)}"
+            return vuln.id
+        def get_solved_versions(vuln) -> "str | None":
+            if len(vuln.fixed_versions) > 0:
+                return ','.join(vuln.fixed_versions)
+            return None
+        num_vulnerabilities = 0
+        for v in [d for d in dependencies.dependencies if len(d.vulns) > 0]:
+            for vulnerability in v.vulns:
+                num_vulnerabilities = num_vulnerabilities + 1
+                fixed_versions = get_solved_versions(vulnerability)
+                if log_vulnerabilities:
+
+                    logger.info(
+                        ("Package %s (Version %s) is vulnerable by %s."
+                         "Please upgrade to %s. Details: %s"),
+                        v.name,
+                        v.version,
+                        get_vulnerability_id(vulnerability),
+                        fixed_versions or "UNSOLVED",
+                        vulnerability.description,
+                    )
+                if fixed_versions is not None:
+                    logger.warning("Update %s to version %s", v.name, fixed_versions)
+                else:
+                    logger.warning("Packages %s has an unresolved vulnerability", v.name)
+        return num_vulnerabilities
