@@ -125,11 +125,19 @@ class PipAuditExecutor(Executor, CliRunnerMixin):
 
         exit_code, stdout, stderr = self.run(pip_audit, arg_items)
 
-        if exit_code == 0:
+        exit_code_no_vulnerabilities = 0
+        exit_code_has_vulnerabilities = 1
+
+        if exit_code in (
+            exit_code_no_vulnerabilities,
+            exit_code_has_vulnerabilities
+        ):
             if len(stdout) > 0:
                 logger.info(stdout)
             else:
                 logger.info("0 vulnerabilities found.")
+
+            return 0
         else:
             logger.warning(stderr)
 
