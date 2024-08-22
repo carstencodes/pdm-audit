@@ -69,7 +69,7 @@ class AuditCommand(BaseCommand):
 
         args = tuple(options.auditor_arguments or [])
         auditor: Auditor = Auditor()
-        auditor.audit(project, *args)
+        auditor.audit(project, options.verbose or False, *args)
 
 
 @contextlib.contextmanager
@@ -84,7 +84,7 @@ def _cwd(path: Path) -> Iterator[None]:
 
 class Auditor:
     @traced_function
-    def audit(self, project: Project, *args: str) -> None:
+    def audit(self, project: Project, verbose: bool, *args: str) -> None:
         with _cwd(project.root):
             logger.info("Auditing packages installed by PDM ...")
             with tempfile.NamedTemporaryFile(
@@ -94,7 +94,7 @@ class Auditor:
                 logger.debug("Exporting requirements.txt file from PDM")
                 req_file_path: Path = Path(req_file.name).resolve()
                 export: Executor = PdmExportDependenciesExecutor(req_file_path)
-                audit: Executor = PipAuditExecutor(req_file_path, *args)
+                audit: Executor = PipAuditExecutor(req_file_path, verbose, *args)
 
                 try:
                     Executor.execute_chain(
