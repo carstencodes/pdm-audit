@@ -83,7 +83,7 @@ radon_hal = "radon hal --functions --json --output-file radon.hal.json src/"
 vulture = "vulture src/"
 bandit = "bandit src/"
 prospector = "prospector src/"
-copyright-headers = "licenseheaders -y 2021-2024 -o 'Carsten Igel' -n pdm-audit -d . -u https://github.com/carstencodes/pdm-audit -t ./.licenseheader.j2 -E .py"
+copyright-headers = "licenseheaders -y 2021-2025 -o 'Carsten Igel' -n pdm-audit -d . -u https://github.com/carstencodes/pdm-audit -t ./.licenseheader.j2 -E .py"
 
 [tool.pdm.scripts.check-style]
 composite = [
