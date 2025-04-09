@@ -71,7 +71,7 @@ requires_python = ">=3.7"
 summary = "httplib2 caching for requests"
 groups = ["default"]
 dependencies = [
-    "cachecontrol==0.14.0",
+    "CacheControl==0.14.0",
     "filelock>=3.8.0",
 ]
 files = [
@@ -81,13 +81,13 @@ files = [
 
 [[package]]
 name = "certifi"
-version = "2024.2.2"
+version = "2025.1.31"
 requires_python = ">=3.6"
 summary = "Python package for providing Mozilla's CA Bundle."
 groups = ["default"]
 files = [
-    {file = "certifi-2024.2.2-py3-none-any.whl", hash = "sha256:dc383c07b76109f368f6106eee2b593b04a011ea4d55f652c6ca24a754d1cdd1"},
-    {file = "certifi-2024.2.2.tar.gz", hash = "sha256:0569859f95fc761b18b45ef421b1290a0f65f147e92a1e5eb3e635f9a5e4e66f"},
+    {file = "certifi-2025.1.31-py3-none-any.whl", hash = "sha256:ca78db4565a652026a4db2bcdf68f2fb589ea80d0be70e03929ed730746b84fe"},
+    {file = "certifi-2025.1.31.tar.gz", hash = "sha256:3d5da6925056f6f18f119200434a4780a94263f10d1c21d032a6f6b2baa20651"},
 ]
 
 [[package]]
@@ -266,37 +266,21 @@ files = [
 
 [[package]]
 name = "hishel"
-version = "0.0.25"
-requires_python = ">=3.8"
+version = "0.1.1"
+requires_python = ">=3.9"
 summary = "Persistent cache implementation for httpx and httpcore"
 groups = ["default"]
 dependencies = [
     "httpx>=0.22.0",
-    "typing-extensions>=4.8.0",
 ]
 files = [
-    {file = "hishel-0.0.25-py3-none-any.whl", hash = "sha256:01365a624995ba100d110b7ba5c404605c3bdb3abcfe919e74e381417d9959fd"},
-    {file = "hishel-0.0.25.tar.gz", hash = "sha256:ddb22ee32c656e3c75cd05efefd1165c5fbd1c3f023edffda684f5125625700b"},
-]
-
-[[package]]
-name = "html5lib"
-version = "1.1"
-requires_python = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
-summary = "HTML parser based on the WHATWG HTML specification"
-groups = ["default"]
-dependencies = [
-    "six>=1.9",
-    "webencodings",
-]
-files = [
-    {file = "html5lib-1.1-py2.py3-none-any.whl", hash = "sha256:0d78f8fde1c230e99fe37986a60526d7049ed4bf8a9fadbad5f00e22e58e041d"},
-    {file = "html5lib-1.1.tar.gz", hash = "sha256:b2e5b40261e20f354d198eae92afc10d750afb487ed5e50f9c4eaf07c184146f"},
+    {file = "hishel-0.1.1-py3-none-any.whl", hash = "sha256:5b51acc340303faeef2f5cfc1658acb1db1fdc3e3ad76406265a485f9707c5d6"},
+    {file = "hishel-0.1.1.tar.gz", hash = "sha256:1f6421b78cc23fc43c610f651b7848c9b8eee2d29551d64a2ab0d45b319b6559"},
 ]
 
 [[package]]
 name = "httpcore"
-version = "1.0.4"
+version = "1.0.7"
 requires_python = ">=3.8"
 summary = "A minimal low-level HTTP client."
 groups = ["default"]
@@ -305,8 +289,8 @@ dependencies = [
     "h11<0.15,>=0.13",
 ]
 files = [
-    {file = "httpcore-1.0.4-py3-none-any.whl", hash = "sha256:ac418c1db41bade2ad53ae2f3834a3a0f5ae76b56cf5aa497d2d033384fc7d73"},
-    {file = "httpcore-1.0.4.tar.gz", hash = "sha256:cb2839ccfcba0d2d3c1131d3c3e26dfc327326fbe7a5dc0dbfe9f6c9151bb022"},
+    {file = "httpcore-1.0.7-py3-none-any.whl", hash = "sha256:a3fff8f43dc260d5bd363d9f9cf1830fa3a458b332856f34282de498ed420edd"},
+    {file = "httpcore-1.0.7.tar.gz", hash = "sha256:8551cb62a169ec7162ac7be8d4817d561f60e08eaa485234898414bb5a8a0b4c"},
 ]
 
 [[package]]
@@ -341,6 +325,20 @@ dependencies = [
 files = [
     {file = "httpx-0.27.0-py3-none-any.whl", hash = "sha256:71d5465162c13681bff01ad59b2cc68dd838ea1f10e51574bac27103f00c91a5"},
     {file = "httpx-0.27.0.tar.gz", hash = "sha256:a0cb88a46f32dc874e04ee956e4c2764aba2aa228f650b06788ba6bda2962ab5"},
+]
+
+[[package]]
+name = "id"
+version = "1.5.0"
+requires_python = ">=3.8"
+summary = "A tool for generating OIDC identities"
+groups = ["default"]
+dependencies = [
+    "requests",
+]
+files = [
+    {file = "id-1.5.0-py3-none-any.whl", hash = "sha256:f1434e1cef91f2cbb8a4ec64663d5a23b9ed43ef44c4c957d02583d61714c658"},
+    {file = "id-1.5.0.tar.gz", hash = "sha256:292cb8a49eacbbdbce97244f47a97b4c62540169c976552e497fd57df0734c1d"},
 ]
 
 [[package]]
@@ -509,19 +507,21 @@ files = [
 
 [[package]]
 name = "pdm"
-version = "2.18.1"
-requires_python = ">=3.8"
+version = "2.23.1"
+requires_python = ">=3.9"
 summary = "A modern Python package and dependency manager supporting the latest PEP standards"
 groups = ["default"]
 dependencies = [
     "blinker",
+    "certifi>=2024.8.30",
     "dep-logic>=0.4.4",
     "filelock>=3.13",
     "findpython<1.0.0a0,>=0.6.0",
-    "hishel<0.1.0,>=0.0.24",
+    "hishel>=0.0.32",
+    "httpcore>=1.0.6",
     "httpx[socks]<1,>0.20",
+    "id>=1.5.0",
     "importlib-metadata>=3.6; python_version < \"3.10\"",
-    "importlib-resources>=5; python_version < \"3.9\"",
     "installer<0.8,>=0.7",
     "msgpack>=1.0",
     "packaging!=22.0,>=20.9",
@@ -529,23 +529,23 @@ dependencies = [
     "platformdirs",
     "pyproject-hooks",
     "python-dotenv>=0.15",
-    "resolvelib>=1.0.1",
+    "resolvelib>=1.1",
     "rich>=12.3.0",
     "shellingham>=1.3.2",
     "tomli>=1.1.0; python_version < \"3.11\"",
     "tomlkit<1,>=0.11.1",
-    "truststore; python_version >= \"3.10\"",
-    "unearth>=0.17.0",
+    "truststore>=0.9; python_version >= \"3.10\"",
+    "unearth>=0.17.5",
     "virtualenv>=20",
 ]
 files = [
-    {file = "pdm-2.18.1-py3-none-any.whl", hash = "sha256:6a86b9a6fbe071dc26f266006ac8d688e8d16e5115ee115135713af95a860c0a"},
-    {file = "pdm-2.18.1.tar.gz", hash = "sha256:acef692477a7190731ee7c1f626e97516eeb7473e4eeeeede4fef2bf0fb743ee"},
+    {file = "pdm-2.23.1-py3-none-any.whl", hash = "sha256:202c217eef140f7fe933f2025cc2a7a7cc0638abe43c51c4a74d3c1aa686d6f7"},
+    {file = "pdm-2.23.1.tar.gz", hash = "sha256:cf12cd2201df78a6543a5485ac1d7015a73b3a6b10c98b66dfae6ebd481386fe"},
 ]
 
 [[package]]
 name = "pdm-pfsc"
-version = "0.12.2"
+version = "0.12.3"
 requires_python = ">=3.9"
 summary = "Core functionPlug-In Foundation Service Collection)"
 groups = ["default"]
@@ -554,18 +554,18 @@ dependencies = [
     "pyproject-metadata>=0.7.1",
 ]
 files = [
-    {file = "pdm_pfsc-0.12.2-py3-none-any.whl", hash = "sha256:fc1872e325ca61d2d98b98a87a3d22a663d4349493835801a4d3a26f24ff86dc"},
+    {file = "pdm_pfsc-0.12.3-py3-none-any.whl", hash = "sha256:f1811cc8e80d3d4414a239f6d484daf1accca934448d7cbfd11d2b3698cd23fe"},
 ]
 
 [[package]]
 name = "pip"
-version = "24.2"
+version = "25.0.1"
 requires_python = ">=3.8"
 summary = "The PyPA recommended tool for installing Python packages."
 groups = ["default"]
 files = [
-    {file = "pip-24.2-py3-none-any.whl", hash = "sha256:2cd581cf58ab7fcfca4ce8efa6dcacd0de5bf8d0a3eb9ec927e07405f4d9e2a2"},
-    {file = "pip-24.2.tar.gz", hash = "sha256:5b5e490b5e9cb275c879595064adce9ebd31b854e3e803740b72f9ccf34a45b8"},
+    {file = "pip-25.0.1-py3-none-any.whl", hash = "sha256:c46efd13b6aa8279f33f2864459c8ce587ea6a1a59ee20de055868d8f7688f7f"},
+    {file = "pip-25.0.1.tar.gz", hash = "sha256:88f96547ea48b940a3a385494e181e29fb8637898f88d88737c5049780f196ea"},
 ]
 
 [[package]]
@@ -584,24 +584,24 @@ files = [
 
 [[package]]
 name = "pip-audit"
-version = "2.7.3"
-requires_python = ">=3.8"
+version = "2.9.0"
+requires_python = ">=3.9"
 summary = "A tool for scanning Python environments for known vulnerabilities"
 groups = ["default"]
 dependencies = [
     "CacheControl[filecache]>=0.13.0",
-    "cyclonedx-python-lib<8,>=5",
-    "html5lib>=1.1",
+    "cyclonedx-python-lib<10,>=5",
     "packaging>=23.0.0",
     "pip-api>=0.0.28",
     "pip-requirements-parser>=32.0.0",
+    "platformdirs>=4.2.0",
     "requests>=2.31.0",
     "rich>=12.4",
     "toml>=0.10",
 ]
 files = [
-    {file = "pip_audit-2.7.3-py3-none-any.whl", hash = "sha256:46a11faee3323f76adf7987de8171daeb660e8f57d8088cc27fb1c1e5c7747b0"},
-    {file = "pip_audit-2.7.3.tar.gz", hash = "sha256:08891bbf179bffe478521f150818112bae998424f58bf9285c0078965aef38bc"},
+    {file = "pip_audit-2.9.0-py3-none-any.whl", hash = "sha256:348b16e60895749a0839875d7cc27ebd692e1584ebe5d5cb145941c8e25a80bd"},
+    {file = "pip_audit-2.9.0.tar.gz", hash = "sha256:0b998410b58339d7a231e5aa004326a294e4c7c6295289cdc9d5e1ef07b1f44d"},
 ]
 
 [[package]]
@@ -724,12 +724,13 @@ files = [
 
 [[package]]
 name = "resolvelib"
-version = "1.0.1"
+version = "1.1.0"
+requires_python = ">=3.7"
 summary = "Resolve abstract dependencies into concrete ones"
 groups = ["default"]
 files = [
-    {file = "resolvelib-1.0.1-py2.py3-none-any.whl", hash = "sha256:d2da45d1a8dfee81bdd591647783e340ef3bcb104b54c383f70d422ef5cc7dbf"},
-    {file = "resolvelib-1.0.1.tar.gz", hash = "sha256:04ce76cbd63fded2078ce224785da6ecd42b9564b1390793f64ddecbe997b309"},
+    {file = "resolvelib-1.1.0-py2.py3-none-any.whl", hash = "sha256:f80de38ae744bcf4e918e27a681a5c6cb63a08d9a926c0989c0730bcdd089049"},
+    {file = "resolvelib-1.1.0.tar.gz", hash = "sha256:b68591ef748f58c1e2a2ac28d0961b3586ae8b25f60b0ba9a5e4f3d87c1d6a79"},
 ]
 
 [[package]]
@@ -757,17 +758,6 @@ groups = ["default"]
 files = [
     {file = "shellingham-1.5.4-py2.py3-none-any.whl", hash = "sha256:7ecfff8f2fd72616f7481040475a65b2bf8af90a56c89140852d1120324e8686"},
     {file = "shellingham-1.5.4.tar.gz", hash = "sha256:8dbca0739d487e5bd35ab3ca4b36e11c4078f3a234bfce294b0a0291363404de"},
-]
-
-[[package]]
-name = "six"
-version = "1.16.0"
-requires_python = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*"
-summary = "Python 2 and 3 compatibility utilities"
-groups = ["default"]
-files = [
-    {file = "six-1.16.0-py2.py3-none-any.whl", hash = "sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254"},
-    {file = "six-1.16.0.tar.gz", hash = "sha256:1e61c37477a1626458e36f7b1d82aa5c9b094fa4802892072e49de9c60c4c926"},
 ]
 
 [[package]]
@@ -838,14 +828,14 @@ files = [
 
 [[package]]
 name = "truststore"
-version = "0.8.0"
-requires_python = ">= 3.10"
+version = "0.10.1"
+requires_python = ">=3.10"
 summary = "Verify certificates using native system trust stores"
 groups = ["default"]
 marker = "python_version >= \"3.10\""
 files = [
-    {file = "truststore-0.8.0-py3-none-any.whl", hash = "sha256:e37a5642ae9fc48caa8f120b6283d77225d600d224965a672c9e8ef49ce4bb4c"},
-    {file = "truststore-0.8.0.tar.gz", hash = "sha256:dc70da89634944a579bfeec70a7a4523c53ffdb3cf52d1bb4a431fda278ddb96"},
+    {file = "truststore-0.10.1-py3-none-any.whl", hash = "sha256:b64e6025a409a43ebdd2807b0c41c8bff49ea7ae6550b5087ac6df6619352d4c"},
+    {file = "truststore-0.10.1.tar.gz", hash = "sha256:eda021616b59021812e800fa0a071e51b266721bef3ce092db8a699e21c63539"},
 ]
 
 [[package]]
@@ -854,6 +844,7 @@ version = "4.10.0"
 requires_python = ">=3.8"
 summary = "Backported and Experimental Type Hints for Python 3.8+"
 groups = ["default"]
+marker = "python_version < \"3.11\""
 files = [
     {file = "typing_extensions-4.10.0-py3-none-any.whl", hash = "sha256:69b1a937c3a517342112fb4c6df7e72fc39a38e7891a5730ed4985b5214b5475"},
     {file = "typing_extensions-4.10.0.tar.gz", hash = "sha256:b0abd7c89e8fb96f98db18d86106ff1d90ab692004eb746cf6eda2682f91b3cb"},
@@ -861,7 +852,7 @@ files = [
 
 [[package]]
 name = "unearth"
-version = "0.17.1"
+version = "0.17.5"
 requires_python = ">=3.8"
 summary = "A utility to fetch and download python packages"
 groups = ["default"]
@@ -870,8 +861,8 @@ dependencies = [
     "packaging>=20",
 ]
 files = [
-    {file = "unearth-0.17.1-py3-none-any.whl", hash = "sha256:4559d8bef08077ae3d20d9fbb10712e45e2f40f85d8e47e58d9f57ec552ecd57"},
-    {file = "unearth-0.17.1.tar.gz", hash = "sha256:4ecd9c2bf9d65ee1476a93219cc823eb54ca49080555de575529567658fd6395"},
+    {file = "unearth-0.17.5-py3-none-any.whl", hash = "sha256:9963e66b14f0484644c9b45b517e530befb2de6a8da4b06a9a38bed2d086dfe6"},
+    {file = "unearth-0.17.5.tar.gz", hash = "sha256:a19e1c02e64b40518d088079c7416fc41b45a648b81a4128aac02597234ee6ba"},
 ]
 
 [[package]]
@@ -900,16 +891,6 @@ dependencies = [
 files = [
     {file = "virtualenv-20.25.1-py3-none-any.whl", hash = "sha256:961c026ac520bac5f69acb8ea063e8a4f071bcc9457b9c1f28f6b085c511583a"},
     {file = "virtualenv-20.25.1.tar.gz", hash = "sha256:e08e13ecdca7a0bd53798f356d5831434afa5b07b93f0abdf0797b7a06ffe197"},
-]
-
-[[package]]
-name = "webencodings"
-version = "0.5.1"
-summary = "Character encoding aliases for legacy web content"
-groups = ["default"]
-files = [
-    {file = "webencodings-0.5.1-py2.py3-none-any.whl", hash = "sha256:a0af1213f3c2226497a97e2b3aa01a7e4bee4f403f95be16fc9acd2947514a78"},
-    {file = "webencodings-0.5.1.tar.gz", hash = "sha256:b36a1c245f2d304965eb4e0a82848379241dc04b865afcc4aab16748587e1923"},
 ]
 
 [[package]]
