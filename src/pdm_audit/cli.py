@@ -38,7 +38,13 @@ def main(core: Core) -> None:
             env_var="PDM_AUDIT_PLUGIN_HOOK_PI",
         ),
     )
-    core.add_config("tools.pdm.audit_plugin.post_install_hook", ConfigItem(
-        "If set to true, run pdm audit after installation", True, env_var="PDM_AUDIT_PLUGIN_HOOK_PI"))
+    core.add_config(
+        "plugin.audit.hook_verbose",
+        ConfigItem(
+            "If set to true, run the hook in verbose mode",
+            True,
+            env_var="PDM_AUDIT_PLUGIN_HOOK_VERBOSE",
+        ),
+    )
 
     post_install.connect(run_pdm_audit_signal)
