@@ -54,8 +54,9 @@ class Executor(ABC):
 
 
 class PdmExportDependenciesExecutor(Executor, CliRunnerMixin):
-    def __init__(self, out_file: Path) -> None:
+    def __init__(self, out_file: Path, write_hashes: bool = False) -> None:
         self.__out_file = out_file
+        self.__write_hashes = write_hashes
 
     @property
     def name(self) -> str:
@@ -79,18 +80,29 @@ class PdmExportDependenciesExecutor(Executor, CliRunnerMixin):
         if pdm is None:
             return -1
 
-        exit_code, _, _ = self.run(
+        args = [
+            "-f",
+            "requirements",
+            "-G",
+            ":all",
+            "-o",
+            str(self.out_file),
+        ]
+
+        if not self.__write_hashes:
+            args.append("--no-hashes")
+
+        call = ["export"]
+        call.extend(args)
+
+        exit_code, _, err = self.run(
             pdm,
-            (
-                "export",
-                "-f",
-                "requirements",
-                "-G",
-                ":all",
-                "-o",
-                str(self.out_file),
-            ),
+            tuple(call),
         )
+
+        if exit_code > 0:
+            logger.error("Error while exporting lock file.")
+            logger.warning(err)
 
         return exit_code
 
@@ -99,12 +111,17 @@ class PipAuditExecutor(Executor, CliRunnerMixin):
     """"""
 
     def __init__(
-        self, input_file: Path, verbose: bool = False, *args: str
+        self,
+        input_file: Path,
+        verbose: bool = False,
+        repeatable: bool = False,
+        *args: str,
     ) -> None:
         """"""
         self.__input_file = input_file
         self.__args = args
         self.__verbose = verbose
+        self.__repeatable = repeatable
 
     @property
     def name(self) -> str:
@@ -134,7 +151,8 @@ class PipAuditExecutor(Executor, CliRunnerMixin):
             return -1
 
         arguments = [a for a in self.args]
-        arguments.append("--require-hashes")
+        if self.__repeatable:
+            arguments.append("--require-hashes")
         arguments.append("--disable-pip")
         arguments.append("--skip-editable")
         arguments.append("--progress-spinner")
