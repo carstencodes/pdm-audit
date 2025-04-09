@@ -1,3 +1,14 @@
+#
+# SPDX-License-Identifier: MIT
+#
+# Copyright (c) 2021-2025 Carsten Igel.
+#
+# This file is part of pdm-audit
+# (see https://github.com/carstencodes/pdm-audit).
+#
+# This file is published using the MIT license.
+# Refer to LICENSE for more information
+#
 import contextlib
 import os
 import tempfile
@@ -6,14 +17,22 @@ from collections.abc import Iterator
 from pathlib import Path
 from typing import Final
 
+pass
 from pdm.cli.commands.base import BaseCommand
-from pdm import core
 from pdm.project import Project
-from pdm_pfsc.logging import traced_function, logger, \
-    update_logger_from_project_ui, setup_logger
+from pdm_pfsc.logging import (
+    logger,
+    setup_logger,
+    traced_function,
+    update_logger_from_project_ui,
+)
 
-from .executor import PipAuditExecutor, PdmExportDependenciesExecutor, \
-    Executor, ExecutionError
+from .executor import (
+    ExecutionError,
+    Executor,
+    PdmExportDependenciesExecutor,
+    PipAuditExecutor,
+)
 
 
 class AuditCommand(BaseCommand):
@@ -33,19 +52,21 @@ class AuditCommand(BaseCommand):
         -------
 
         """
-        parser.add_argument("auditor_arguments",
-                            nargs="*",
-                            default=[],
-                            help="Arguments passed to pip-audit - should be preceded by --\n"
-                            "The arguments to apply to maybe\n"
-                            "     -S/--strict\n"
-                            "     -l/--local\n"
-                            "     -s/--vulnerability-servers osv|pypi\n"
-                            "     -f/--format columns|json|cyclonedx-json|cyclonedx-xml|markdown\n"
-                            "     -o/--output FILE\n"
-                            "     -d/--dry-run\n"
-                            "     --timeout TIMEOUT (in seconds)",
-                            action="store")
+        parser.add_argument(
+            "auditor_arguments",
+            nargs="*",
+            default=[],
+            help="Arguments passed to pip-audit - should be preceded by --\n"
+            "The arguments to apply to maybe\n"
+            "     -S/--strict\n"
+            "     -l/--local\n"
+            "     -s/--vulnerability-servers osv|pypi\n"
+            "     -f/--format columns|json|cyclonedx-json|cyclonedx-xml|markdown\n"
+            "     -o/--output FILE\n"
+            "     -d/--dry-run\n"
+            "     --timeout TIMEOUT (in seconds)",
+            action="store",
+        )
 
     def handle(self, project: Project, options: Namespace) -> None:
         """
@@ -94,13 +115,12 @@ class Auditor:
                 logger.debug("Exporting requirements.txt file from PDM")
                 req_file_path: Path = Path(req_file.name).resolve()
                 export: Executor = PdmExportDependenciesExecutor(req_file_path)
-                audit: Executor = PipAuditExecutor(req_file_path, verbose, *args)
+                audit: Executor = PipAuditExecutor(
+                    req_file_path, verbose, *args
+                )
 
                 try:
-                    Executor.execute_chain(
-                        export,
-                        audit
-                    )
+                    Executor.execute_chain(export, audit)
                 except ExecutionError as e:
                     logger.exception(
                         "Auditing failed.",
