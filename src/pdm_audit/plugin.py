@@ -108,15 +108,20 @@ class Auditor:
     def audit(self, project: Project, verbose: bool, *args: str) -> None:
         with _cwd(project.root):
             logger.info("Auditing packages installed by PDM ...")
+            repeatable = (
+                project.config["plugin.audit.repeatable_audit"] or False
+            )
             with tempfile.NamedTemporaryFile(
                 suffix="req.txt",
                 prefix="pdm_audit",
             ) as req_file:
                 logger.debug("Exporting requirements.txt file from PDM")
                 req_file_path: Path = Path(req_file.name).resolve()
-                export: Executor = PdmExportDependenciesExecutor(req_file_path)
+                export: Executor = PdmExportDependenciesExecutor(
+                    req_file_path, repeatable
+                )
                 audit: Executor = PipAuditExecutor(
-                    req_file_path, verbose, *args
+                    req_file_path, verbose, repeatable, *args
                 )
 
                 try:
