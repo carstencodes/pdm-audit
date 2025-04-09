@@ -17,11 +17,6 @@ readme = "README.md"
 [project.license]
 text = "MIT"
 
-[project.license-files]
-paths = [
-    "LICENSE",
-]
-
 [project.urls]
 homepage = "https://github.com/carstencodes/pdm-audit"
 
