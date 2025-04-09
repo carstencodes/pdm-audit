@@ -1,3 +1,14 @@
+#
+# SPDX-License-Identifier: MIT
+#
+# Copyright (c) 2021-2025 Carsten Igel.
+#
+# This file is part of pdm-audit
+# (see https://github.com/carstencodes/pdm-audit).
+#
+# This file is published using the MIT license.
+# Refer to LICENSE for more information
+#
 from dataclasses import dataclass, field
 from json import loads
 
@@ -5,12 +16,14 @@ from json import loads
 @dataclass
 class DependenciesInfo:
     """"""
+
     dependencies: "list[DependencyInfo]" = field(default_factory=list)
 
 
 @dataclass
 class DependencyInfo:
     """"""
+
     name: str = field()
     version: str = field()
     vulns: "list[VulnerabilityInfo]" = field(default_factory=list)
@@ -19,6 +32,7 @@ class DependencyInfo:
 @dataclass
 class VulnerabilityInfo:
     """"""
+
     id: str = field()
     description: str = field()
     fixed_versions: list[str] = field(default_factory=list)
@@ -46,16 +60,18 @@ def get_dependencies(json_str: str) -> "DependenciesInfo | None":
                     fixed_versions = vuln.get("fix_versions", [])
                     aliases = vuln.get("aliases", [])
                     description = vuln.get("description", None)
-                    vulnerabilities.append(VulnerabilityInfo(
-                        id=v_id or "UNKNOWN",
-                        description=description or "UNKNOWN",
-                        aliases=aliases or [],
-                        fixed_versions=fixed_versions or [],
-                    ))
+                    vulnerabilities.append(
+                        VulnerabilityInfo(
+                            id=v_id or "UNKNOWN",
+                            description=description or "UNKNOWN",
+                            aliases=aliases or [],
+                            fixed_versions=fixed_versions or [],
+                        )
+                    )
             instance = DependencyInfo(
                 name=name or "UNKNOWN",
                 version=version or "UNKNOWN",
-                vulns=vulnerabilities
+                vulns=vulnerabilities,
             )
             instances.append(instance)
         return DependenciesInfo(dependencies=instances)

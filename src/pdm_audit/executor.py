@@ -1,8 +1,19 @@
-from abc import abstractmethod, ABC
+#
+# SPDX-License-Identifier: MIT
+#
+# Copyright (c) 2021-2025 Carsten Igel.
+#
+# This file is part of pdm-audit
+# (see https://github.com/carstencodes/pdm-audit).
+#
+# This file is published using the MIT license.
+# Refer to LICENSE for more information
+#
+from abc import ABC, abstractmethod
 from pathlib import Path
 from typing import Optional
 
-from pdm_pfsc.logging import traced_function, logger
+from pdm_pfsc.logging import logger, traced_function
 from pdm_pfsc.proc import CliRunnerMixin
 
 from .updates import get_dependencies
@@ -16,6 +27,7 @@ class ExecutionError(Exception):
 
 class Executor(ABC):
     """"""
+
     @property
     @abstractmethod
     def name(self) -> str:
@@ -42,8 +54,9 @@ class Executor(ABC):
 
 
 class PdmExportDependenciesExecutor(Executor, CliRunnerMixin):
-    def __init__(self, out_file: Path) -> None:
+    def __init__(self, out_file: Path, write_hashes: bool = False) -> None:
         self.__out_file = out_file
+        self.__write_hashes = write_hashes
 
     @property
     def name(self) -> str:
@@ -67,26 +80,48 @@ class PdmExportDependenciesExecutor(Executor, CliRunnerMixin):
         if pdm is None:
             return -1
 
-        exit_code, _, _ = self.run(pdm, (
-            "export",
+        args = [
             "-f",
             "requirements",
             "-G",
             ":all",
             "-o",
-            str(self.out_file)),
+            str(self.out_file),
+        ]
+
+        if not self.__write_hashes:
+            args.append("--no-hashes")
+
+        call = ["export"]
+        call.extend(args)
+
+        exit_code, _, err = self.run(
+            pdm,
+            tuple(call),
         )
+
+        if exit_code > 0:
+            logger.error("Error while exporting lock file.")
+            logger.warning(err)
 
         return exit_code
 
 
 class PipAuditExecutor(Executor, CliRunnerMixin):
     """"""
-    def __init__(self, input_file: Path, verbose: bool = False, *args: str) -> None:
+
+    def __init__(
+        self,
+        input_file: Path,
+        verbose: bool = False,
+        repeatable: bool = False,
+        *args: str,
+    ) -> None:
         """"""
         self.__input_file = input_file
         self.__args = args
         self.__verbose = verbose
+        self.__repeatable = repeatable
 
     @property
     def name(self) -> str:
@@ -116,7 +151,8 @@ class PipAuditExecutor(Executor, CliRunnerMixin):
             return -1
 
         arguments = [a for a in self.args]
-        arguments.append("--require-hashes")
+        if self.__repeatable:
+            arguments.append("--require-hashes")
         arguments.append("--disable-pip")
         arguments.append("--skip-editable")
         arguments.append("--progress-spinner")
@@ -135,18 +171,25 @@ class PipAuditExecutor(Executor, CliRunnerMixin):
 
         if exit_code in (
             exit_code_no_vulnerabilities,
-            exit_code_has_vulnerabilities
+            exit_code_has_vulnerabilities,
         ):
             if len(stdout) > 0:
                 d = get_dependencies(stdout)
                 if d is not None:
                     num_vulnerabilities = self._get_number_of_vulnerabilities(
-                        d, self.__verbose)
-                    logger.warning("%i vulnerabilities found", num_vulnerabilities)
+                        d, self.__verbose
+                    )
+                    logger.warning(
+                        "%i vulnerabilities found", num_vulnerabilities
+                    )
                 else:
-                    logger.warning("Failed to get dependencies with vulnerabilities")
+                    logger.warning(
+                        "Failed to get dependencies with vulnerabilities"
+                    )
             elif exit_code == exit_code_has_vulnerabilities:
-                logger.warning("Vulnerable packages found. Failed to get details")
+                logger.warning(
+                    "Vulnerable packages found. Failed to get details"
+                )
             else:
                 logger.info("0 vulnerabilities found.")
 
@@ -156,15 +199,19 @@ class PipAuditExecutor(Executor, CliRunnerMixin):
 
         return exit_code
 
-    def _get_number_of_vulnerabilities(self, dependencies, log_vulnerabilities=False):
+    def _get_number_of_vulnerabilities(
+        self, dependencies, log_vulnerabilities=False
+    ):
         def get_vulnerability_id(vuln) -> str:
             if len(vuln.aliases) > 0:
                 return f"{vuln.id},{','.join(vuln.aliases)}"
             return vuln.id
+
         def get_solved_versions(vuln) -> "str | None":
             if len(vuln.fixed_versions) > 0:
-                return ','.join(vuln.fixed_versions)
+                return ",".join(vuln.fixed_versions)
             return None
+
         num_vulnerabilities = 0
         for v in [d for d in dependencies.dependencies if len(d.vulns) > 0]:
             for vulnerability in v.vulns:
@@ -173,8 +220,10 @@ class PipAuditExecutor(Executor, CliRunnerMixin):
                 if log_vulnerabilities:
 
                     logger.info(
-                        ("Package %s (Version %s) is vulnerable by %s."
-                         "Please upgrade to %s. Details: %s"),
+                        (
+                            "Package %s (Version %s) is vulnerable by %s."
+                            "Please upgrade to %s. Details: %s"
+                        ),
                         v.name,
                         v.version,
                         get_vulnerability_id(vulnerability),
@@ -182,7 +231,11 @@ class PipAuditExecutor(Executor, CliRunnerMixin):
                         vulnerability.description,
                     )
                 if fixed_versions is not None:
-                    logger.warning("Update %s to version %s", v.name, fixed_versions)
+                    logger.warning(
+                        "Update %s to version %s", v.name, fixed_versions
+                    )
                 else:
-                    logger.warning("Packages %s has an unresolved vulnerability", v.name)
+                    logger.warning(
+                        "Packages %s has an unresolved vulnerability", v.name
+                    )
         return num_vulnerabilities
