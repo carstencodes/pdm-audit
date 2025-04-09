@@ -46,5 +46,14 @@ def main(core: Core) -> None:
             env_var="PDM_AUDIT_PLUGIN_HOOK_VERBOSE",
         ),
     )
+    core.add_config(
+        "plugin.audit.repeatable_audit",
+        ConfigItem(
+            "If set to true, run pdm audit with repeatable audits. "
+            "This will include hashes and hence cannot be used for "
+            "references with local references",
+            False,
+        ),
+    )
 
     post_install.connect(run_pdm_audit_signal)
