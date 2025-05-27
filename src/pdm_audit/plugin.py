@@ -121,7 +121,7 @@ class Auditor:
                     req_file_path, repeatable
                 )
                 audit: Executor = PipAuditExecutor(
-                    req_file_path, verbose, repeatable, *args
+                    req_file_path, project, verbose, repeatable, *args
                 )
 
                 try:

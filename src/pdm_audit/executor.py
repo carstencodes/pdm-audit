@@ -13,6 +13,7 @@ from abc import ABC, abstractmethod
 from pathlib import Path
 from typing import Optional
 
+from pdm.project import Project
 from pdm_pfsc.logging import logger, traced_function
 from pdm_pfsc.proc import CliRunnerMixin
 
@@ -113,6 +114,7 @@ class PipAuditExecutor(Executor, CliRunnerMixin):
     def __init__(
         self,
         input_file: Path,
+        project: Project, 
         verbose: bool = False,
         repeatable: bool = False,
         *args: str,
@@ -122,6 +124,7 @@ class PipAuditExecutor(Executor, CliRunnerMixin):
         self.__args = args
         self.__verbose = verbose
         self.__repeatable = repeatable
+        self.__project = project
 
     @property
     def name(self) -> str:
@@ -146,7 +149,7 @@ class PipAuditExecutor(Executor, CliRunnerMixin):
     @traced_function
     def execute(self) -> int:
         """"""
-        pip_audit: Path = self._which("pip-audit")
+        pip_audit: Path = self._which("pip-audit", project=self.__project)
         if pip_audit is None:
             return -1
 
