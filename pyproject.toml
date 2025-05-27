@@ -6,10 +6,10 @@ authors = [
     { name = "Carsten Igel", email = "cig@bite-that-bit.de" },
 ]
 dependencies = [
-    "pdm>=2.23.1",
+    "pdm>=2.24.2",
     "pip-audit>=2.9.0",
-    "pdm-pfsc>=0.12.3",
-    "pip>=25.0.1",
+    "pdm-pfsc>=0.13.0",
+    "pip>=25.1.1",
 ]
 requires-python = ">=3.9"
 readme = "README.md"
@@ -34,39 +34,6 @@ distribution = true
 plugins = [
     "-e file:///${PROJECT_ROOT}",
     "pdm-bump",
-]
-
-[tool.pdm.dev-dependencies]
-test = [
-    "pytest>=7.1.2",
-    "tox>=3.25.1",
-    "tox-pdm>=0.6.0",
-    "pytest-cov>=3.0.0",
-]
-formatting = [
-    "black>=22.6.0",
-    "isort>=5.10.1",
-    "licenseheaders>=0.8.8",
-    "autoflake>=2.0.2",
-    "pyment>=0.3.3",
-]
-release = [
-    "gitlint>=0.17.0",
-    "pip-audit>=2.4.4",
-]
-static-code-analysis = [
-    "radon>=5.1.0",
-    "vulture>=2.7",
-    "bandit>=1.7.4",
-    "prospector>=0.12.2",
-]
-checkstyle = [
-    "flake8>=3.9.2",
-    "flake518>=1.2.3",
-    "mypy>=0.971",
-    "pylint>=2.14.5",
-    "pycodestyle>=2.7.0",
-    "pep8-naming>=0.13.3",
 ]
 
 [tool.pdm.scripts]
@@ -194,3 +161,36 @@ sort_commits = "oldest"
 [[tool.git-cliff.git.commit_preprocessors]]
 pattern = "\\((\\w+\\s)?#([0-9]+)\\)"
 replace = "([#${2}](https://github.com/orhun/git-cliff/issues/${2}))"
+
+[dependency-groups]
+checkstyle = [
+    "flake8>=7.2.0",
+    "flake518>=1.6.0",
+    "mypy>=1.15.0",
+    "pylint>=3.3.7",
+    "pycodestyle>=2.13.0",
+    "pep8-naming>=0.10.0",
+]
+formatting = [
+    "black>=25.1.0",
+    "isort>=6.0.1",
+    "licenseheaders>=0.8.8",
+    "autoflake>=2.3.1",
+    "pyment>=0.3.3",
+]
+release = [
+    "gitlint>=0.19.1",
+    "pip-audit>=2.9.0",
+]
+static-code-analysis = [
+    "radon>=6.0.1",
+    "vulture>=2.14",
+    "bandit>=1.8.3",
+    "prospector>=1.17.1",
+]
+test = [
+    "pytest>=8.3.5",
+    "tox>=4.26.0",
+    "tox-pdm>=0.7.2",
+    "pytest-cov>=6.1.1",
+]
