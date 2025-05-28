@@ -149,11 +149,20 @@ class PipAuditExecutor(Executor, CliRunnerMixin):
     @traced_function
     def execute(self) -> int:
         """"""
+        prepend_args: list[str] = []
         pip_audit: Path = self._which("pip-audit", project=self.__project)
         if pip_audit is None:
-            return -1
+            try:
+                # try calling pip-audit as python module using the venv module
+                # Use a non-official API part of PDM
+                pip_audit = self.__project.environment.interpreter.executable
+                prepend_args = ["-m", "pip_audit"]
+            except Error as e:  # This may be triggered, if PDM internal models contain breaking changes
+                logger.debug(e)
+                logger.error("Failed to find python interpreter for project environment")
+                return -1
 
-        arguments = [a for a in self.args]
+        arguments = prepend_args + [a for a in self.args]
         if self.__repeatable:
             arguments.append("--require-hashes")
         arguments.append("--disable-pip")
