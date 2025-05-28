@@ -1,6 +1,6 @@
 [project]
 name = "pdm-audit"
-version = "0.6.1a1"
+version = "0.6.1a2"
 description = "A plug-in running a security audit when installing packages"
 authors = [
     { name = "Carsten Igel", email = "cig@bite-that-bit.de" },
