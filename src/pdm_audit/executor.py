@@ -10,8 +10,13 @@
 # Refer to LICENSE for more information
 #
 from abc import ABC, abstractmethod
+from contextlib import contextmanager
 from pathlib import Path
+from os import environ as os_environment, getenv as os_environ, pathsep as os_pathsep
+from sys import version as sys_version
 from typing import Optional
+
+from findpython import find as find_python
 
 from pdm.project import Project
 from pdm_pfsc.logging import logger, traced_function
@@ -108,6 +113,25 @@ class PdmExportDependenciesExecutor(Executor, CliRunnerMixin):
         return exit_code
 
 
+@contextmanager
+def _plugin_envionment(project: "Project") -> "Path":
+    PYTHONPATH = "PYTHONPATH"
+    old_python_path = os_environ(PYTHONPATH, "")
+    logger.debug("Selecting python interpreter '%s'", sys_version)
+    try:
+        python_interpreter = find_python(sys_version)
+        plugins_folder = project.root / ".pdm-plugins" / "lib" / f"python{python_interpreter.major}.{python_interpreter.minor}" / "site-packages"
+        if not project.is_global and plugins_folder.exists():
+            logger.debug("Found project local pdm plugins folder: %s", plugins_folder)
+            os_environment[PYTHONPATH] = os_pathsep.join([str(plugins_folder), old_python_path])
+
+        logger.debug("Using python interpreter %s for executing pip-audit", python_interpreter.interpreter)
+        yield python_interpreter.interpreter
+    finally:
+        logger.debug("Reset PYTHONPATH to old value: %s", old_python_path)
+        os_environment[PYTHONPATH] = old_python_path
+
+
 class PipAuditExecutor(Executor, CliRunnerMixin):
     """"""
 
@@ -149,19 +173,9 @@ class PipAuditExecutor(Executor, CliRunnerMixin):
     @traced_function
     def execute(self) -> int:
         """"""
-        prepend_args: list[str] = []
-        pip_audit: Path = self._which("pip-audit", project=self.__project)
-        if pip_audit is None:
-            try:
-                # try calling pip-audit as python module using the venv module
-                # Use a non-official API part of PDM
-                pip_audit = self.__project.environment.interpreter.executable
-                prepend_args = ["-m", "pip_audit"]
-            except Error as e:  # This may be triggered, if PDM internal models contain breaking changes
-                logger.debug(e)
-                logger.error("Failed to find python interpreter for project environment")
-                return -1
-
+        # Run pip_audit as python main module
+        prepend_args: list[str] = ["-m", "pip_audit"]
+        
         arguments = prepend_args + [a for a in self.args]
         if self.__repeatable:
             arguments.append("--require-hashes")
@@ -176,7 +190,8 @@ class PipAuditExecutor(Executor, CliRunnerMixin):
 
         arg_items = tuple(arguments)
 
-        exit_code, stdout, stderr = self.run(pip_audit, arg_items)
+        with _plugin_envionment(self.__project) as pip_audit:
+            exit_code, stdout, stderr = self.run(pip_audit, arg_items)
 
         exit_code_no_vulnerabilities = 0
         exit_code_has_vulnerabilities = 1
