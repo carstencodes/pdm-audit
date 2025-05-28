@@ -16,9 +16,9 @@ from .plugin import Auditor
 
 
 def run_pdm_audit_signal(
-    project: Project, candidates: dict, dry_run: bool, **kwargs
+    project: Project, packages: list, dry_run: bool = False, **kwargs
 ) -> None:
-    del candidates, kwargs
+    del packages, kwargs
     run: bool = project.config["plugin.audit.post_install_hook"] or False
     if not dry_run and run:
         auditor: Auditor = Auditor()
