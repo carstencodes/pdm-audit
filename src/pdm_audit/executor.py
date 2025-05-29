@@ -206,9 +206,14 @@ class PipAuditExecutor(Executor, CliRunnerMixin):
                     num_vulnerabilities = self._get_number_of_vulnerabilities(
                         d, self.__verbose
                     )
-                    logger.warning(
-                        "%i vulnerabilities found", num_vulnerabilities
-                    )
+                    if num_vulnerabilities > 0:
+                        logger.warning(
+                            "%i vulnerabilities found", num_vulnerabilities
+                        )
+                    else:
+                        logger.info(
+                            "%i vulnerabilities found", num_vulnerabilities
+                        )
                 else:
                     logger.warning(
                         "Failed to get dependencies with vulnerabilities"
