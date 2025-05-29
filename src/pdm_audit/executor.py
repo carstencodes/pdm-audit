@@ -10,9 +10,8 @@
 # Refer to LICENSE for more information
 #
 from abc import ABC, abstractmethod
-from contextlib import contextmanager
 from pathlib import Path
-from os import environ as os_environment, getenv as os_environ, pathsep as os_pathsep
+from os import getenv as os_environ, environ as os_environment, pathsep as os_pathsep
 from sys import version as sys_version
 from typing import Optional
 
@@ -20,7 +19,7 @@ from findpython import find as find_python
 
 from pdm.project import Project
 from pdm_pfsc.logging import logger, traced_function
-from pdm_pfsc.proc import CliRunnerMixin
+from pdm_pfsc.proc import CliRunnerMixin, ProcessRunner
 
 from .updates import get_dependencies
 
@@ -113,23 +112,63 @@ class PdmExportDependenciesExecutor(Executor, CliRunnerMixin):
         return exit_code
 
 
-@contextmanager
-def _plugin_envionment(project: "Project") -> "Path":
-    PYTHONPATH = "PYTHONPATH"
-    old_python_path = os_environ(PYTHONPATH, "")
-    logger.debug("Selecting python interpreter '%s'", sys_version)
-    try:
-        python_interpreter = find_python(sys_version)
-        plugins_folder = project.root / ".pdm-plugins" / "lib" / f"python{python_interpreter.major}.{python_interpreter.minor}" / "site-packages"
-        if not project.is_global and plugins_folder.exists():
-            logger.debug("Found project local pdm plugins folder: %s", plugins_folder)
-            os_environment[PYTHONPATH] = os_pathsep.join([str(plugins_folder), old_python_path])
+class PipAuditLocator(ProcessRunner):
+    def __init__(self, python_interpreter: "Path", python_path: "Optional[Path]") -> None:
+        self.__interpreter = python_interpreter
+        self.__python_path = python_path
 
-        logger.debug("Using python interpreter %s for executing pip-audit", python_interpreter.interpreter)
-        yield python_interpreter.interpreter
-    finally:
-        logger.debug("Reset PYTHONPATH to old value: %s", old_python_path)
-        os_environment[PYTHONPATH] = old_python_path
+    @property
+    def interpreter(self):
+        return self.__interpreter
+
+    @traced_function
+    def supports_pip_audit(self) -> bool:
+        script = "import pip_audit;"
+
+        args = ["-c", script]
+        logger.debug("Running '%s' with args %s and python_path '%s'", self.__interpreter, args, self.__python_path)
+
+        cmd = [str(self.__interpreter)] + args
+        result = self._run_process(cmd, check=False, capture_output=True, cwd=".", env=self.proc_env)
+
+        logger.debug("Process result:\n\texit_code: %i\n\tstd_out: %s\n\tstd_err: %s",
+                     result.returncode,
+                     result.stdout,
+                     result.stderr,
+                     )
+        return result.returncode == 0
+    
+    @property
+    def proc_env(self):
+        PYTHONPATH = "PYTHONPATH"
+        env = dict()
+        env.update(os_environment)
+        if self.__python_path is not None:
+            env[PYTHONPATH] = os_pathsep.join([str(self.__python_path), os_environ(PYTHONPATH, "")])
+
+        return env
+    
+    @classmethod
+    def from_current_env(cls, project: "Project") -> "Optional[PipAuditLocator]":
+        python_interpreter = find_python(sys_version)
+        if python_interpreter is None:
+            return None
+        plugins_folder = project.root / ".pdm-plugins" / "lib" / f"python{python_interpreter.major}.{python_interpreter.minor}" / "site-packages"
+        if project.is_global or not plugins_folder.exists():
+            plugins_folder = None
+        return PipAuditLocator(python_interpreter.executable, plugins_folder)
+    
+    @classmethod
+    def from_project(cls, project: "Project") -> "Optional[PipAuditLocator]":
+        return PipAuditLocator(project.python.executable, None)
+
+    @classmethod
+    def from_project_env(cls, project: "Project") -> "Optional[PipAuditLocator]":
+        return PipAuditLocator(project.environment.interpreter.executable, None)
+
+
+class _PipAuditNotFoundError(Exception):
+    pass
 
 
 class PipAuditExecutor(Executor, CliRunnerMixin):
@@ -190,8 +229,15 @@ class PipAuditExecutor(Executor, CliRunnerMixin):
 
         arg_items = tuple(arguments)
 
-        with _plugin_envionment(self.__project) as pip_audit:
-            exit_code, stdout, stderr = self.run(pip_audit, arg_items)
+        try:
+            location = self.__find_interpreters_supporting_pip_audit()
+            interpreter = location.interpreter
+            env = location.proc_env
+        except _PipAuditNotFoundError:
+            logger.error("Failed to find a python environment that supports `pip_audit` module")
+            return 125
+
+        exit_code, stdout, stderr = self.run(interpreter, arg_items, env=env)
 
         exit_code_no_vulnerabilities = 0
         exit_code_has_vulnerabilities = 1
@@ -230,7 +276,25 @@ class PipAuditExecutor(Executor, CliRunnerMixin):
             logger.warning(stderr)
 
         return exit_code
+    
+    @traced_function
+    def __find_interpreters_supporting_pip_audit(self) -> "PipAuditLocator":
+        for locator in [
+            PipAuditLocator.from_current_env(self.__project),
+            PipAuditLocator.from_project(self.__project),
+            PipAuditLocator.from_project_env(self.__project),
+        ]:
+            if locator is None:
+                continue
+            if locator.supports_pip_audit():
+                logger.debug("'%s' supports pip_audit. Using this interpreter.", locator.interpreter)
+                return locator
+            logger.debug("'%s' does not support pip_audit. Searching next ...", locator.interpreter)
+            
+        logger.debug("No interpreter found.")
+        raise _PipAuditNotFoundError()
 
+    @traced_function
     def _get_number_of_vulnerabilities(
         self, dependencies, log_vulnerabilities=False
     ):
