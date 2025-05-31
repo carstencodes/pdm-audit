@@ -18,7 +18,6 @@ from typing import Optional
 
 from pdm.project import Project
 from pdm.environments.base import BareEnvironment
-from torch import P
 from pdm_pfsc.logging import logger, traced_function
 from pdm_pfsc.proc import CliRunnerMixin, ProcessRunner
 
