@@ -12,12 +12,11 @@
 from abc import ABC, abstractmethod
 from pathlib import Path
 from os import getenv as os_environ, environ as os_environment, pathsep as os_pathsep
+from shutil import which
 from sys import version_info as sys_version_info, executable as sys_executable
-from turtle import rt
 from typing import Optional
 
 from pdm.project import Project
-from pdm.environments.base import BareEnvironment
 from pdm_pfsc.logging import logger, traced_function
 from pdm_pfsc.proc import CliRunnerMixin, ProcessRunner
 
@@ -154,8 +153,8 @@ class PipAuditLocator(ProcessRunner):
         return result.returncode == 0
 
     @classmethod
-    def from_pdm_env(cls, project: "Project") -> "PipAuditLocator":
-        pdm = BareEnvironment(project).which("pdm")
+    def from_pdm_env(cls) -> "PipAuditLocator":
+        pdm = which("pdm")
         if pdm is None:
             raise FileNotFoundError("pdm")
         pdm_exe = Path(pdm)
@@ -292,7 +291,7 @@ class PipAuditExecutor(Executor, CliRunnerMixin):
     @traced_function
     def __find_interpreters_supporting_pip_audit(self) -> "PipAuditLocator":
         for locator in [
-            PipAuditLocator.from_pdm_env(self.__project),
+            PipAuditLocator.from_pdm_env(),
             PipAuditLocator.from_current_env(self.__project),
             PipAuditLocator.from_project(self.__project),
             PipAuditLocator.from_project_env(self.__project),
