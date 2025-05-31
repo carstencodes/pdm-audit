@@ -8,7 +8,7 @@ authors = [
 dependencies = [
     "pdm>=2.24.2",
     "pip-audit>=2.9.0",
-    "pdm-pfsc>=0.13.2",
+    "pdm-pfsc>=0.13.3",
     "pip>=25.1.1",
 ]
 requires-python = ">=3.9"
