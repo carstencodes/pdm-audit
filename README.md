@@ -1,6 +1,6 @@
 # pdm-audit
 
-PDM Audit is an auditing tool inspired by commands like `npm audit`. It primarily relies on the ability of PDM to export the current lock file as `requirements.txt` and the ability of `pip-audit` to use these files for an audit against various CVE registries.
+PDM Audit is an auditing tool inspired by commands like `npm audit`. It primarily relies on the ability of `pdm` to export the current lock file as `requirements.txt` and the ability of `pip-audit` to use these files for an audit against various CVE registries.
 
 ## Usage
 
@@ -18,8 +18,7 @@ This will add `pdm-audit` to your global environment and make it available in ev
 
 ### Project local installation
 
-Each project may introduce a local setting called  `tools
-.pdm.plugins` which will be installed locally by running `pdm install --plugins`. To achieve this, you must add the following lines to your local `pyproject.toml`:
+Each project may introduce a local setting called  `tool.pdm.plugins` which will be installed locally by running `pdm install --plugins`. To achieve this, you must add the following lines to your local `pyproject.toml`:
 
 ```toml
 
