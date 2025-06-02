@@ -137,7 +137,7 @@ class PipAuditLocator(ProcessRunner):
     
     @traced_function
     def supports_pip_audit(self) -> bool:
-        script = "import pip_audit;"
+        script = "import pip_audit; import pip;"
 
         args = list(self.__args) + ["-c", script]
         logger.debug("Running '%s' with args %s and python_path '%s'", self.__interpreter, args, self.__python_path)
