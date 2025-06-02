@@ -42,7 +42,7 @@ def main(core: Core) -> None:
         "plugin.audit.hook_verbose",
         ConfigItem(
             "If set to true, run the hook in verbose mode",
-            True,
+            False,
             env_var="PDM_AUDIT_PLUGIN_HOOK_VERBOSE",
         ),
     )
@@ -52,7 +52,7 @@ def main(core: Core) -> None:
             "If set to true, run pdm audit with repeatable audits. "
             "This will include hashes and hence cannot be used for "
             "references with local references",
-            False,
+            True,
         ),
     )
 
