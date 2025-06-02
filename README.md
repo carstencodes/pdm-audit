@@ -1,5 +1,8 @@
 # pdm-audit
 
+![PyPI](https://img.shields.io/pypi/v/pdm-audit?logo=python&logoColor=%23cccccc)
+[![pdm-managed](https://img.shields.io/badge/pdm-managed-blueviolet)](https://pdm-project.org)
+
 PDM Audit is an auditing tool inspired by commands like `npm audit`. It primarily relies on the ability of `pdm` to export the current lock file as `requirements.txt` and the ability of `pip-audit` to use these files for an audit against various CVE registries.
 
 ## Usage
