@@ -12,6 +12,7 @@
 
 from pdm.project import Project
 
+from .config import Config  
 from .plugin import Auditor
 
 
@@ -19,10 +20,11 @@ def run_pdm_audit_signal(
     project: Project, packages: list, dry_run: bool = False, **kwargs
 ) -> None:
     del packages, kwargs
-    run: bool = project.config["plugin.audit.post_install_hook"] or False
+    config = Config(project)
+    run: bool = config.use_hook
     if not dry_run and run:
         auditor: Auditor = Auditor()
         auditor.audit(
             project,
-            project.config["plugin.audit.hook_verbose"] or False,
+            config.hook_verbose,
         )

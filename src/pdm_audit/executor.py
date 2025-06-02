@@ -228,7 +228,7 @@ class PipAuditExecutor(Executor, CliRunnerMixin):
         arguments = prepend_args + [a for a in self.args]
         if self.__repeatable:
             arguments.append("--require-hashes")
-        arguments.append("--disable-pip")
+            arguments.append("--disable-pip")
         arguments.append("--skip-editable")
         arguments.append("--progress-spinner")
         arguments.append("off")
