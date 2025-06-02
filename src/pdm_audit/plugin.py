@@ -17,7 +17,6 @@ from collections.abc import Iterator
 from pathlib import Path
 from typing import Final
 
-pass
 from pdm.cli.commands.base import BaseCommand
 from pdm.project import Project
 from pdm_pfsc.logging import (
@@ -27,6 +26,7 @@ from pdm_pfsc.logging import (
     update_logger_from_project_ui,
 )
 
+from .config import Config
 from .executor import (
     ExecutionError,
     Executor,
@@ -108,9 +108,8 @@ class Auditor:
     def audit(self, project: Project, verbose: bool, *args: str) -> None:
         with _cwd(project.root):
             logger.info("Auditing packages installed by PDM ...")
-            repeatable = (
-                project.config["plugin.audit.repeatable_audit"] or False
-            )
+            repeatable = Config(project).repeatable
+            
             with tempfile.NamedTemporaryFile(
                 suffix="req.txt",
                 prefix="pdm_audit",
