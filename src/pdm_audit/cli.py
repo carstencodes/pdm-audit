@@ -10,11 +10,12 @@
 # Refer to LICENSE for more information
 #
 from pdm.core import Core
-from pdm.project import ConfigItem
 from pdm.signals import post_install
 
 from pdm_audit.plugin import AuditCommand
 from pdm_audit.signal import run_pdm_audit_signal
+
+from .config import config_definition
 
 
 def main(core: Core) -> None:
@@ -31,29 +32,16 @@ def main(core: Core) -> None:
     """
     core.register_command(AuditCommand)
     core.add_config(
-        "plugin.audit.post_install_hook",
-        ConfigItem(
-            "If set to true, run pdm audit after installation",
-            True,
-            env_var="PDM_AUDIT_PLUGIN_HOOK_PI",
-        ),
+        config_definition.config_names.use_hook,
+        config_definition.config_items.use_hook,
     )
     core.add_config(
-        "plugin.audit.hook_verbose",
-        ConfigItem(
-            "If set to true, run the hook in verbose mode",
-            False,
-            env_var="PDM_AUDIT_PLUGIN_HOOK_VERBOSE",
-        ),
+        config_definition.config_names.hook_verbose,
+        config_definition.config_items.hook_verbose,
     )
     core.add_config(
-        "plugin.audit.repeatable_audit",
-        ConfigItem(
-            "If set to true, run pdm audit with repeatable audits. "
-            "This will include hashes and hence cannot be used for "
-            "references with local references",
-            True,
-        ),
+        config_definition.config_names.repeatable,
+        config_definition.config_items.repeatable,
     )
 
     post_install.connect(run_pdm_audit_signal)

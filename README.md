@@ -65,17 +65,25 @@ The hook cannot be configured this way as it always produces a temporary JSON fi
 
 ### Configuration options
 
-| Value (in `pdm.toml`)               | Description                        | Default Value | Environment-Variable          |
-| ----------------------------------- | ---------------------------------- | ------------- | ----------------------------- |
-| plugin.audit.post_installation_hook | Enable / Disable Post-Install-Hook | True          | PDM_AUDIT_PLUGIN_HOOK_PI      |
-| plugin.audit.hook_verbose           | Equal to calling `pdm audit -vv`   | False         | PDM_AUDIT_PLUGIN_HOOK_VERBOSE |
-| plugin.audit.repeatable_audit       | Add hashes to requirements.txt     | True          |            ---                |
+| Value (in `pdm.toml`)            | Description                        | Default Value | Environment-Variable          |
+| -------------------------------- | ---------------------------------- | ------------- | ----------------------------- |
+| plugin.audit.post_install_hook   | Enable / Disable Post-Install-Hook | True          | PDM_AUDIT_PLUGIN_HOOK_PI      |
+| plugin.audit.hook_verbose        | Equal to calling `pdm audit -vv`   | False         | PDM_AUDIT_PLUGIN_HOOK_VERBOSE |
+| plugin.audit.repeatable_audit    | Add hashes to requirements.txt     | True          |            ---                |
 
 So, if you temporarily want to disable the audit during installation, you can run 
 
 ```shell
 $ PDM_AUDIT_PLUGIN_HOOK_PI=False pdm install 
 ```
+
+On the other, if permanently disabled, you can use
+
+```shell
+$ PDM_AUDIT_PLUGIN_HOOK_PI=True pdm install 
+```
+
+for an audited installation.
 
 Repeatable audits are enabled by default. This will export the hashes of all requirements to the `requirements.txt` which is used for `pip-audit`. This unfortunately will fail, if your project depends on editable installs, as there are no hashes available. Hence auditing will fail. So, run `pdm config --local plugin.audit.repeatable_audit False` to disable exporting the hashes. This will add a string value. It will automatically be converted to a boolean value. It must be equal to 'true' or '1' - blanks will be removed and casing will be enabled.
 
