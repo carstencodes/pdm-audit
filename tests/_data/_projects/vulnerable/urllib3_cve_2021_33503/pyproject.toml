@@ -1,0 +1,18 @@
+[project]
+name = "urllib3_cve_2021_33503"
+version = "0.1.0"
+description = "Default template for PDM package"
+authors = [
+    {name = "Carsten Igel", email = "1760987+carstencodes@users.noreply.github.com"},
+]
+dependencies = ["urllib3==1.25.0"]
+requires-python = ">=3.9"
+readme = "README.md"
+license = {text = "Unlicense"}
+
+
+[tool.pdm]
+distribution = false
+plugins = [
+    "-e file:///${PROJECT_ROOT}/../../../../../",
+]
