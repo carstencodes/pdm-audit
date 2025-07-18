@@ -6,7 +6,7 @@ authors = [
     { name = "Carsten Igel", email = "cig@bite-that-bit.de" },
 ]
 dependencies = [
-    "pdm>=2.24.2",
+    "pdm>=2.25.4",
     "pip-audit>=2.9.0",
     "pdm-pfsc>=0.13.3",
     "pip>=25.1.1",
@@ -164,11 +164,11 @@ replace = "([#${2}](https://github.com/orhun/git-cliff/issues/${2}))"
 
 [dependency-groups]
 checkstyle = [
-    "flake8>=7.2.0",
+    "flake8>=7.3.0",
     "flake518>=1.6.0",
-    "mypy>=1.15.0",
+    "mypy>=1.17.0",
     "pylint>=3.3.7",
-    "pycodestyle>=2.13.0",
+    "pycodestyle>=2.14.0",
     "pep8-naming>=0.10.0",
 ]
 formatting = [
@@ -185,12 +185,12 @@ release = [
 static-code-analysis = [
     "radon>=6.0.1",
     "vulture>=2.14",
-    "bandit>=1.8.3",
-    "prospector>=1.17.1",
+    "bandit>=1.8.6",
+    "prospector>=1.17.2",
 ]
 test = [
-    "pytest>=8.3.5",
-    "tox>=4.26.0",
+    "pytest>=8.4.1",
+    "tox>=4.27.0",
     "tox-pdm>=0.7.2",
-    "pytest-cov>=6.1.1",
+    "pytest-cov>=6.2.1",
 ]
