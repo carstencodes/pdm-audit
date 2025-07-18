@@ -66,8 +66,12 @@ class Executor(ABC):
                 if raise_error:
                     raise ExecutionError(executor)
                 else:
-                    pdm_core.exit_stack.close()
-                    pdm_core.exit_stack.pop_all()
+                    if hasattr(pdm_core, "exit_stack"):
+                        exit_stack = getattr(pdm_core, "exit_stack")
+                        exit_stack.close()
+                        exit_stack.pop_all()
+                    else:
+                        logger.warn("Failed to clean-up exit stack. PDM might exit with zero code.")
                     raise SystemExit(exit_code)
 
 
