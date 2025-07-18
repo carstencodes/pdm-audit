@@ -169,7 +169,7 @@ checkstyle = [
     "mypy>=1.17.0",
     "pylint>=3.3.7",
     "pycodestyle>=2.14.0",
-    "pep8-naming>=0.10.0",
+    "pep8-naming>=0.15.1",
 ]
 formatting = [
     "black>=25.1.0",
