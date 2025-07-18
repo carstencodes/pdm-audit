@@ -40,7 +40,7 @@ class AuditCommand(BaseCommand):
     name: Final[str] = "audit"  # pylint: disable=C0103
     description: str = "Runs an audit tool on the packages installed by PDM"
 
-    def add_arguments(self, parser: ArgumentParser) -> None:
+    def add_arguments(self, parser: "ArgumentParser") -> None:
         """
 
         Parameters
@@ -68,7 +68,7 @@ class AuditCommand(BaseCommand):
             action="store",
         )
 
-    def handle(self, project: Project, options: Namespace) -> None:
+    def handle(self, project: "Project", options: "Namespace") -> None:
         """
 
         Parameters
@@ -94,7 +94,7 @@ class AuditCommand(BaseCommand):
 
 
 @contextlib.contextmanager
-def _cwd(path: Path) -> Iterator[None]:
+def _cwd(path: "Path") -> Iterator[None]:
     old_cwd = os.getcwd()
     try:
         os.chdir(path)
@@ -105,7 +105,7 @@ def _cwd(path: Path) -> Iterator[None]:
 
 class Auditor:
     @traced_function
-    def audit(self, project: Project, verbose: bool, *args: str) -> None:
+    def audit(self, project: "Project", verbose: "bool", *args: "str") -> "None":
         with _cwd(project.root):
             logger.info("Auditing packages installed by PDM ...")
             repeatable = Config(project).repeatable

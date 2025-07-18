@@ -112,7 +112,7 @@ class PdmExportDependenciesExecutor(Executor, CliRunnerMixin):
 
 
 class PipAuditLocator(ProcessRunner):
-    def __init__(self, python_interpreter: "Path", python_path: "Optional[Path]", *cmd_args: "str") -> None:
+    def __init__(self, python_interpreter: "Path", python_path: "Optional[Path]", *cmd_args: "str") -> "None":
         self.__interpreter = python_interpreter
         self.__python_path = python_path
         self.__args: "tuple[str, ...]" = cmd_args
@@ -186,10 +186,10 @@ class PipAuditExecutor(Executor, CliRunnerMixin):
 
     def __init__(
         self,
-        input_file: Path,
-        project: Project, 
-        verbose: bool = False,
-        repeatable: bool = False,
+        input_file: "Path",
+        project: "Project", 
+        verbose: "bool" = False,
+        repeatable: "bool" = False,
         *args: str,
     ) -> None:
         """"""
