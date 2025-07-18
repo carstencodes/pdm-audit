@@ -2,5 +2,55 @@
     "$schema": "https://docs.renovatebot.com/renovate-schema.json",
     "extends": [
         "config:recommended"
-    ]
+    ],
+    "managerFilePatterns": [
+        "/^.devcontainer/devcontainer.json$/",
+        "/^.devcontainer.json$/"
+    ],
+    "addLabels": [
+        "dependencies",
+        "renovatebot"
+    ],
+    "assignees": [
+        "carstencodes"
+    ],
+    "assigneesFromCodeOwners": true,
+    "automerge": true,
+    "automergeStrategy": "rebase",
+    "automergeType": "branch",
+    "branchPrefix": "renovate/",
+    "commitBodyTable": true,
+    "commitMessagePrefix": "chore(deps): ",
+    "commitMessageSuffix": "Automatically created by mend renovate bot.",
+    "draftPR": false,
+    "enabled": true,
+    "enabledManagers": [
+        "pep621",
+        "pyenv",
+        "github-actions",
+        "devcontainer"
+    ],
+    "ignoreDeps": [],
+    "osvVulnerabilityAlerts": true,
+    "packageRules": [
+      {
+        "matchManagers": ["pep621"],
+        "rangeStrategy": "bump"
+      },
+      {
+        "matchManagers": ["pyenv"],
+        "rangeStrategy": "replace"
+      },
+      {
+        "matchManagers": ["github-actions"],
+        "rangeStrategy": "replace"
+      }
+    ],
+    "platformAutomerge": true,
+    "pruneBranchAfterAutomerge": true,
+    "pruneStaleBranches": true,
+    "rebaseWhen": "behind-base-branch",
+    "timezone": "Etc/UTC",
+    "updateLockFiles": true,
+    "updateNotScheduled": true
 }
