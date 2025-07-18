@@ -14,9 +14,10 @@ from pathlib import Path
 from os import getenv as os_environ, environ as os_environment, pathsep as os_pathsep
 from shutil import which
 from sys import version_info as sys_version_info, executable as sys_executable
-from typing import Optional
+from typing import Optional, Protocol, runtime_checkable
 
 from pdm.project import Project
+from pdm.core import Core
 from pdm_pfsc.logging import logger, traced_function
 from pdm_pfsc.proc import CliRunnerMixin, ProcessRunner
 
@@ -27,6 +28,12 @@ class ExecutionError(Exception):
     def __init__(self, executor: "Executor") -> None:
         message = f"Failed to execute {executor.name}: {executor.description}"
         super().__init__(message)
+
+
+@runtime_checkable
+class _SupportsNonZeroExit(Protocol):
+    @property
+    def may_exit_non_zero(self) -> "bool": ...
 
 
 class Executor(ABC):
@@ -50,11 +57,18 @@ class Executor(ABC):
         raise NotImplementedError()
 
     @staticmethod
-    def execute_chain(*executors: "Executor") -> None:
+    def execute_chain(pdm_core: "Core", *executors: "Executor") -> None:
         """"""
         for executor in executors:
-            if executor.execute() != 0:
-                raise ExecutionError(executor)
+            raise_error: "bool" = not isinstance(executor, _SupportsNonZeroExit) or not executor.may_exit_non_zero
+            exit_code: "int" = executor.execute()
+            if exit_code != 0:
+                if raise_error:
+                    raise ExecutionError(executor)
+                else:
+                    pdm_core.exit_stack.close()
+                    pdm_core.exit_stack.pop_all()
+                    raise SystemExit(exit_code)
 
 
 class PdmExportDependenciesExecutor(Executor, CliRunnerMixin):
@@ -220,6 +234,11 @@ class PipAuditExecutor(Executor, CliRunnerMixin):
     def args(self) -> tuple[str, ...]:
         """"""
         return self.__args
+    
+    @property
+    def may_exit_non_zero(self) -> "bool":
+        """"""
+        return self.__exit_non_zero
 
     @traced_function
     def execute(self) -> int:
@@ -267,7 +286,7 @@ class PipAuditExecutor(Executor, CliRunnerMixin):
                     )
                     if num_vulnerabilities > 0:
                         logger.warning(
-                            "%i vulnerabilities found", num_vulnerabilities
+                            "%i vulnerability hints arisen", num_vulnerabilities
                         )
                     else:
                         logger.info(

@@ -132,7 +132,7 @@ class Auditor:
                 )
 
                 try:
-                    Executor.execute_chain(export, audit)
+                    Executor.execute_chain(project.core, export, audit)
                 except ExecutionError as e:
                     logger.exception(
                         "Auditing failed.",
