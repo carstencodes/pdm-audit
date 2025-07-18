@@ -190,6 +190,7 @@ class PipAuditExecutor(Executor, CliRunnerMixin):
         project: "Project", 
         verbose: "bool" = False,
         repeatable: "bool" = False,
+        exit_non_zero: "bool" = False,
         *args: str,
     ) -> None:
         """"""
@@ -198,6 +199,7 @@ class PipAuditExecutor(Executor, CliRunnerMixin):
         self.__verbose = verbose
         self.__repeatable = repeatable
         self.__project = project
+        self.__exit_non_zero = exit_non_zero
 
     @property
     def name(self) -> str:
@@ -282,7 +284,8 @@ class PipAuditExecutor(Executor, CliRunnerMixin):
             else:
                 logger.info("0 vulnerabilities found.")
 
-            return 0
+            # Return exit code if a failure is desired.
+            return 0 if not self.__exit_non_zero else exit_code
         else:
             logger.warning(stderr)
 

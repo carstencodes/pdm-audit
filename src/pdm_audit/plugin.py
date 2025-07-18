@@ -52,6 +52,14 @@ class AuditCommand(BaseCommand):
         -------
 
         """
+
+        parser.add_argument(
+            "-f",
+            "--fail",
+            action="store_true",
+            help="Exit with non-zero result, if vulnerabilities have been found."
+        )
+
         parser.add_argument(
             "auditor_arguments",
             nargs="*",
@@ -90,7 +98,7 @@ class AuditCommand(BaseCommand):
 
         args = tuple(options.auditor_arguments or [])
         auditor: Auditor = Auditor()
-        auditor.audit(project, options.verbose or False, *args)
+        auditor.audit(project, options.verbose or False, options.fail, *args)
 
 
 @contextlib.contextmanager
@@ -105,7 +113,7 @@ def _cwd(path: "Path") -> Iterator[None]:
 
 class Auditor:
     @traced_function
-    def audit(self, project: "Project", verbose: "bool", *args: "str") -> "None":
+    def audit(self, project: "Project", verbose: "bool", exit_non_zero: "bool", *args: "str") -> "None":
         with _cwd(project.root):
             logger.info("Auditing packages installed by PDM ...")
             repeatable = Config(project).repeatable
@@ -120,7 +128,7 @@ class Auditor:
                     req_file_path, repeatable
                 )
                 audit: Executor = PipAuditExecutor(
-                    req_file_path, project, verbose, repeatable, *args
+                    req_file_path, project, verbose, repeatable, exit_non_zero=exit_non_zero, *args
                 )
 
                 try:

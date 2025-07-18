@@ -34,4 +34,5 @@ def run_pdm_audit_signal(
         auditor.audit(
             project,
             config.hook_verbose,
+            False,
         )
