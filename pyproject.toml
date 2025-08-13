@@ -186,7 +186,7 @@ static-code-analysis = [
     "radon>=6.0.1",
     "vulture>=2.14",
     "bandit>=1.8.6",
-    "prospector>=1.17.2",
+    "prospector>=1.17.3",
 ]
 test = [
     "pytest>=8.4.1",
