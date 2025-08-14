@@ -6,7 +6,7 @@ authors = [
     { name = "Carsten Igel", email = "cig@bite-that-bit.de" },
 ]
 dependencies = [
-    "pdm>=2.25.5",
+    "pdm>=2.25.6",
     "pip-audit>=2.9.0",
     "pdm-pfsc>=0.13.3",
     "pip>=25.2",
