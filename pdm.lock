@@ -5,7 +5,7 @@
 groups = ["default", "checkstyle", "formatting", "release", "static-code-analysis", "test"]
 strategy = ["inherit_metadata"]
 lock_version = "4.5.0"
-content_hash = "sha256:063e730440a8eec8fc96609b6f500afd822855df274b3383bb4eb74c5901c786"
+content_hash = "sha256:a8e8978d4f3e9509e342e3ee1286c813f5e288097938c9baacd11778f200dbc3"
 
 [[metadata.targets]]
 requires_python = ">=3.9"
@@ -1079,18 +1079,18 @@ files = [
 
 [[package]]
 name = "pbs-installer"
-version = "2025.8.8"
+version = "2025.8.18"
 requires_python = ">=3.8"
 summary = "Installer for Python Build Standalone"
 groups = ["default"]
 files = [
-    {file = "pbs_installer-2025.8.8-py3-none-any.whl", hash = "sha256:85644d2ab4e4e9f78d59be34ed6c55f39305174e56e1f5ad7f1509af709cede4"},
-    {file = "pbs_installer-2025.8.8.tar.gz", hash = "sha256:3b2a7703dd253c718ee201e801040208591ae35b338107761fbcdc1aa7543a86"},
+    {file = "pbs_installer-2025.8.18-py3-none-any.whl", hash = "sha256:06cc58ac675caea2c49bf5674885e472e65bd4ad5b46c3306b674a8c9385320f"},
+    {file = "pbs_installer-2025.8.18.tar.gz", hash = "sha256:48dc683c6cc260140f8d8acf686a4ef6fc366ec4b25698a60dad344a36a00f9b"},
 ]
 
 [[package]]
 name = "pdm"
-version = "2.25.6"
+version = "2.25.9"
 requires_python = ">=3.9"
 summary = "A modern Python package and dependency manager supporting the latest PEP standards"
 groups = ["default"]
@@ -1121,8 +1121,8 @@ dependencies = [
     "virtualenv>=20",
 ]
 files = [
-    {file = "pdm-2.25.6-py3-none-any.whl", hash = "sha256:5f18326edb40cb3d179f96583be1253ee31cf9160cc7ca4299839eaebd079f2a"},
-    {file = "pdm-2.25.6.tar.gz", hash = "sha256:46693c26dde87bdeffecf18eb852ea55434c9b6b2aec42edef237f4ac595763c"},
+    {file = "pdm-2.25.9-py3-none-any.whl", hash = "sha256:86d9726bdd33206f1150972940d6cfff0a67440c223ee6f44854a27b24a7da6f"},
+    {file = "pdm-2.25.9.tar.gz", hash = "sha256:fb5fcd561986db1d83255d01e97e2e16f80debf743934d891a62ff2933ccc80c"},
 ]
 
 [[package]]
@@ -1674,8 +1674,8 @@ files = [
 
 [[package]]
 name = "requests"
-version = "2.32.4"
-requires_python = ">=3.8"
+version = "2.32.5"
+requires_python = ">=3.9"
 summary = "Python HTTP for Humans."
 groups = ["default", "release"]
 dependencies = [
@@ -1685,8 +1685,8 @@ dependencies = [
     "urllib3<3,>=1.21.1",
 ]
 files = [
-    {file = "requests-2.32.4-py3-none-any.whl", hash = "sha256:27babd3cda2a6d50b30443204ee89830707d396671944c998b5975b031ac2b2c"},
-    {file = "requests-2.32.4.tar.gz", hash = "sha256:27d0316682c8a29834d3264820024b62a36942083d52caf2f14c0591336d3422"},
+    {file = "requests-2.32.5-py3-none-any.whl", hash = "sha256:2462f94637a34fd532264295e186976db0f5d453d1cdd31473c85a6a161affb6"},
+    {file = "requests-2.32.5.tar.gz", hash = "sha256:dbba0bac56e100853db0ea71b82b4dfd5fe2bf6d3754a8893c3af500cec7d7cf"},
 ]
 
 [[package]]
