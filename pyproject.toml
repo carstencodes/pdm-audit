@@ -192,5 +192,5 @@ test = [
     "pytest>=8.4.1",
     "tox>=4.30.1",
     "tox-pdm>=0.7.2",
-    "pytest-cov>=6.2.1",
+    "pytest-cov>=6.3.0",
 ]
