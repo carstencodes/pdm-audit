@@ -7,7 +7,7 @@ authors = [
 ]
 dependencies = [
     "pdm>=2.26.1",
-    "pip-audit>=2.9.0",
+    "pip-audit>=2.10.0",
     "pdm-pfsc>=0.13.3",
     "pip>=25.2",
 ]
@@ -180,7 +180,7 @@ formatting = [
 ]
 release = [
     "gitlint>=0.19.1",
-    "pip-audit>=2.9.0",
+    "pip-audit>=2.10.0",
 ]
 static-code-analysis = [
     "radon>=6.0.1",
