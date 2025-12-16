@@ -5,26 +5,25 @@
 groups = ["default", "checkstyle", "formatting", "release", "static-code-analysis", "test"]
 strategy = ["inherit_metadata"]
 lock_version = "4.5.0"
-content_hash = "sha256:5d906056eda8307236137581242c206154b59fb84cb5838e99e1b1386f9a5d43"
+content_hash = "sha256:f98e9d53a581e36c735a12013bf08431e705f3b06fccb5c3fd6ca03b97a69eca"
 
 [[metadata.targets]]
 requires_python = ">=3.10"
 
 [[package]]
 name = "anyio"
-version = "4.11.0"
+version = "4.12.0"
 requires_python = ">=3.9"
 summary = "High-level concurrency and networking framework on top of asyncio or Trio"
 groups = ["default"]
 dependencies = [
     "exceptiongroup>=1.0.2; python_version < \"3.11\"",
     "idna>=2.8",
-    "sniffio>=1.1",
     "typing-extensions>=4.5; python_version < \"3.13\"",
 ]
 files = [
-    {file = "anyio-4.11.0-py3-none-any.whl", hash = "sha256:0287e96f4d26d4149305414d4e3bc32f0dcd0862365a4bddea19d7a1ec38c4fc"},
-    {file = "anyio-4.11.0.tar.gz", hash = "sha256:82a8d0b81e318cc5ce71a5f1f8b5c4e63619620b63141ef8c995fa0db95a57c4"},
+    {file = "anyio-4.12.0-py3-none-any.whl", hash = "sha256:dad2376a628f98eeca4881fc56cd06affd18f659b17a747d3ff0307ced94b1bb"},
+    {file = "anyio-4.12.0.tar.gz", hash = "sha256:73c693b567b0c55130c104d0b43a9baf3aa6a31fc6110116509f27bf75e21ec0"},
 ]
 
 [[package]]
@@ -620,7 +619,7 @@ files = [
 
 [[package]]
 name = "exceptiongroup"
-version = "1.3.0"
+version = "1.3.1"
 requires_python = ">=3.7"
 summary = "Backport of PEP 654 (exception groups)"
 groups = ["default", "test"]
@@ -629,8 +628,8 @@ dependencies = [
     "typing-extensions>=4.6.0; python_version < \"3.13\"",
 ]
 files = [
-    {file = "exceptiongroup-1.3.0-py3-none-any.whl", hash = "sha256:4d111e6e0c13d0644cad6ddaa7ed0261a0b36971f6d23e7ec9b4b9097da78a10"},
-    {file = "exceptiongroup-1.3.0.tar.gz", hash = "sha256:b241f5885f560bc56a59ee63ca4c6a8bfa46ae4ad651af316d4e81817bb9fd88"},
+    {file = "exceptiongroup-1.3.1-py3-none-any.whl", hash = "sha256:a7a39a3bd276781e98394987d3a5701d0c4edffb633bb7a5144577f82c773598"},
+    {file = "exceptiongroup-1.3.1.tar.gz", hash = "sha256:8b412432c6055b0b7d14c310000ae93352ed6754f70fa8f7c34141f91c4e3219"},
 ]
 
 [[package]]
@@ -646,7 +645,7 @@ files = [
 
 [[package]]
 name = "findpython"
-version = "0.7.0"
+version = "0.7.1"
 requires_python = ">=3.8"
 summary = "A utility to find python versions on your system"
 groups = ["default"]
@@ -655,8 +654,8 @@ dependencies = [
     "platformdirs>=4.3.6",
 ]
 files = [
-    {file = "findpython-0.7.0-py3-none-any.whl", hash = "sha256:f53cfcc29536f5b83c962cf922bba8ff6d6a3c2a05fda6a45aa58a47d005d8fc"},
-    {file = "findpython-0.7.0.tar.gz", hash = "sha256:8b31647c76352779a3c1a0806699b68e6a7bdc0b5c2ddd9af2a07a0d40c673dc"},
+    {file = "findpython-0.7.1-py3-none-any.whl", hash = "sha256:1b78b1ff6e886cbddeffe80f8ecdbf2b8b061169bbd18b673070e26b644c51ac"},
+    {file = "findpython-0.7.1.tar.gz", hash = "sha256:9f29e6a3dabdb75f2b39c949772c0ed26eab15308006669f3478cdab0d867c78"},
 ]
 
 [[package]]
@@ -1145,18 +1144,18 @@ files = [
 
 [[package]]
 name = "pbs-installer"
-version = "2025.10.28"
+version = "2025.12.5"
 requires_python = ">=3.8"
 summary = "Installer for Python Build Standalone"
 groups = ["default"]
 files = [
-    {file = "pbs_installer-2025.10.28-py3-none-any.whl", hash = "sha256:329b0800df9ff8d50c79bfead69b0e05fa5c81d31e7e77377d1c422f94407eda"},
-    {file = "pbs_installer-2025.10.28.tar.gz", hash = "sha256:399f1788b17c650e69c42729ba9e74d240909f36cfe187b5f9b60488314ba154"},
+    {file = "pbs_installer-2025.12.5-py3-none-any.whl", hash = "sha256:1cc1977bbb8367bb3ce03a7954f58d6e765e184fd873b73674076f9e8788cd08"},
+    {file = "pbs_installer-2025.12.5.tar.gz", hash = "sha256:3d03347d73f4a58ddfbe26473b622065476633e57de44fb025527c8852e4efa7"},
 ]
 
 [[package]]
 name = "pdm"
-version = "2.26.1"
+version = "2.26.2"
 requires_python = ">=3.9"
 summary = "A modern Python package and dependency manager supporting the latest PEP standards"
 groups = ["default"]
@@ -1187,8 +1186,8 @@ dependencies = [
     "virtualenv>=20",
 ]
 files = [
-    {file = "pdm-2.26.1-py3-none-any.whl", hash = "sha256:20c95f799c182c8ea4c33d81e51571e8fc6e2ab4c1fd34827856014a32f1f8c6"},
-    {file = "pdm-2.26.1.tar.gz", hash = "sha256:60a568201424a7193b661f6fed6e446e39695b52edc5e0904ba0b07fcaf2e787"},
+    {file = "pdm-2.26.2-py3-none-any.whl", hash = "sha256:b3b0199f6eec37284192a6feb26bef21f911d45d5aa4b02323ff211752abf04b"},
+    {file = "pdm-2.26.2.tar.gz", hash = "sha256:98207f8aabd6913a25ee0b4985e79e1652e2db274915f3ccf9408e33191ede4e"},
 ]
 
 [[package]]
@@ -1872,17 +1871,6 @@ groups = ["release", "static-code-analysis"]
 files = [
     {file = "six-1.17.0-py2.py3-none-any.whl", hash = "sha256:4721f391ed90541fddacab5acf947aa0d3dc7d27b2e1e8eda2be8970586c3274"},
     {file = "six-1.17.0.tar.gz", hash = "sha256:ff70335d468e7eb6ec65b95b99d3a2836546063f63acc5171de367e834932a81"},
-]
-
-[[package]]
-name = "sniffio"
-version = "1.3.1"
-requires_python = ">=3.7"
-summary = "Sniff out which async library your code is running under"
-groups = ["default"]
-files = [
-    {file = "sniffio-1.3.1-py3-none-any.whl", hash = "sha256:2f6da418d1f1e0fddd844478f41680e794e6051915791a034ff65e5f100525a2"},
-    {file = "sniffio-1.3.1.tar.gz", hash = "sha256:f4324edc670a0f49750a81b895f35c3adb843cca46f0530f79fc1babb23789dc"},
 ]
 
 [[package]]
