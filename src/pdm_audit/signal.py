@@ -11,13 +11,9 @@
 #
 
 from pdm.project import Project
+from pdm_pfsc.logging import setup_logger, update_logger_from_project_ui
 
-from pdm_pfsc.logging import (
-    setup_logger,
-    update_logger_from_project_ui,
-)
-
-from .config import Config  
+from .config import Config
 from .plugin import Auditor
 
 

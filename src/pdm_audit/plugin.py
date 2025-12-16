@@ -57,7 +57,7 @@ class AuditCommand(BaseCommand):
             "-f",
             "--fail",
             action="store_true",
-            help="Exit with non-zero result, if vulnerabilities have been found."
+            help="Exit with non-zero result, if vulnerabilities have been found.",
         )
 
         parser.add_argument(
@@ -113,11 +113,17 @@ def _cwd(path: "Path") -> Iterator[None]:
 
 class Auditor:
     @traced_function
-    def audit(self, project: "Project", verbose: "bool", exit_non_zero: "bool", *args: "str") -> "None":
+    def audit(
+        self,
+        project: "Project",
+        verbose: "bool",
+        exit_non_zero: "bool",
+        *args: "str",
+    ) -> "None":
         with _cwd(project.root):
             logger.info("Auditing packages installed by PDM ...")
             repeatable = Config(project).repeatable
-            
+
             with tempfile.NamedTemporaryFile(
                 suffix="req.txt",
                 prefix="pdm_audit",
@@ -128,7 +134,12 @@ class Auditor:
                     req_file_path, repeatable
                 )
                 audit: Executor = PipAuditExecutor(
-                    req_file_path, project, verbose, repeatable, exit_non_zero=exit_non_zero, *args
+                    req_file_path,
+                    project,
+                    verbose,
+                    repeatable,
+                    exit_non_zero=exit_non_zero,
+                    *args,
                 )
 
                 try:
