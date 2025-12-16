@@ -10,14 +10,17 @@
 # Refer to LICENSE for more information
 #
 from abc import ABC, abstractmethod
+from os import environ as os_environment
+from os import getenv as os_environ
+from os import pathsep as os_pathsep
 from pathlib import Path
-from os import getenv as os_environ, environ as os_environment, pathsep as os_pathsep
 from shutil import which
-from sys import version_info as sys_version_info, executable as sys_executable
+from sys import executable as sys_executable
+from sys import version_info as sys_version_info
 from typing import Optional, Protocol, runtime_checkable
 
-from pdm.project import Project
 from pdm.core import Core
+from pdm.project import Project
 from pdm_pfsc.logging import logger, traced_function
 from pdm_pfsc.proc import CliRunnerMixin, ProcessRunner
 
@@ -60,7 +63,10 @@ class Executor(ABC):
     def execute_chain(pdm_core: "Core", *executors: "Executor") -> None:
         """"""
         for executor in executors:
-            raise_error: "bool" = not isinstance(executor, _SupportsNonZeroExit) or not executor.may_exit_non_zero
+            raise_error: "bool" = (
+                not isinstance(executor, _SupportsNonZeroExit)
+                or not executor.may_exit_non_zero
+            )
             exit_code: "int" = executor.execute()
             if exit_code != 0:
                 if raise_error:
@@ -71,7 +77,9 @@ class Executor(ABC):
                         exit_stack.close()
                         exit_stack.pop_all()
                     else:
-                        logger.warn("Failed to clean-up exit stack. PDM might exit with zero code.")
+                        logger.warn(
+                            "Failed to clean-up exit stack. PDM might exit with zero code."
+                        )
                     raise SystemExit(exit_code)
 
 
@@ -130,7 +138,12 @@ class PdmExportDependenciesExecutor(Executor, CliRunnerMixin):
 
 
 class PipAuditLocator(ProcessRunner):
-    def __init__(self, python_interpreter: "Path", python_path: "Optional[Path]", *cmd_args: "str") -> "None":
+    def __init__(
+        self,
+        python_interpreter: "Path",
+        python_path: "Optional[Path]",
+        *cmd_args: "str",
+    ) -> "None":
         self.__interpreter = python_interpreter
         self.__python_path = python_path
         self.__args: "tuple[str, ...]" = cmd_args
@@ -138,7 +151,7 @@ class PipAuditLocator(ProcessRunner):
     @property
     def interpreter(self) -> "Path":
         return self.__interpreter
-    
+
     @property
     def args(self) -> "list[str]":
         return list(self.__args)
@@ -149,25 +162,35 @@ class PipAuditLocator(ProcessRunner):
         env = dict()
         env.update(os_environment)
         if self.__python_path is not None:
-            env[PYTHONPATH] = os_pathsep.join([str(self.__python_path), os_environ(PYTHONPATH, "")])
+            env[PYTHONPATH] = os_pathsep.join(
+                [str(self.__python_path), os_environ(PYTHONPATH, "")]
+            )
 
         return env
-    
+
     @traced_function
     def supports_pip_audit(self) -> bool:
         script = "import pip_audit; import pip;"
 
         args = list(self.__args) + ["-c", script]
-        logger.debug("Running '%s' with args %s and python_path '%s'", self.__interpreter, args, self.__python_path)
+        logger.debug(
+            "Running '%s' with args %s and python_path '%s'",
+            self.__interpreter,
+            args,
+            self.__python_path,
+        )
 
         cmd = [str(self.__interpreter)] + args
-        result = self._run_process(cmd, check=False, capture_output=True, cwd=".", env=self.proc_env)
+        result = self._run_process(
+            cmd, check=False, capture_output=True, cwd=".", env=self.proc_env
+        )
 
-        logger.debug("Process result:\n\texit_code: %i\n\tstd_out: %s\n\tstd_err: %s",
-                     result.returncode,
-                     result.stdout,
-                     result.stderr,
-                     )
+        logger.debug(
+            "Process result:\n\texit_code: %i\n\tstd_out: %s\n\tstd_err: %s",
+            result.returncode,
+            result.stdout,
+            result.stderr,
+        )
         return result.returncode == 0
 
     @classmethod
@@ -177,22 +200,32 @@ class PipAuditLocator(ProcessRunner):
             raise FileNotFoundError("pdm")
         pdm_exe = Path(pdm)
         return PipAuditLocator(pdm_exe, None, "run", "python")
-    
+
     @classmethod
     def from_current_env(cls, project: "Project") -> "PipAuditLocator":
         python_interpreter = sys_version_info
-        plugins_folder = project.root / ".pdm-plugins" / "lib" / f"python{python_interpreter.major}.{python_interpreter.minor}" / "site-packages"
+        plugins_folder = (
+            project.root
+            / ".pdm-plugins"
+            / "lib"
+            / f"python{python_interpreter.major}.{python_interpreter.minor}"
+            / "site-packages"
+        )
         if project.is_global or not plugins_folder.exists():
             plugins_folder = None
         return PipAuditLocator(Path(sys_executable), plugins_folder)
-    
+
     @classmethod
     def from_project(cls, project: "Project") -> "Optional[PipAuditLocator]":
         return PipAuditLocator(project.python.executable, None)
 
     @classmethod
-    def from_project_env(cls, project: "Project") -> "Optional[PipAuditLocator]":
-        return PipAuditLocator(project.environment.interpreter.executable, None)
+    def from_project_env(
+        cls, project: "Project"
+    ) -> "Optional[PipAuditLocator]":
+        return PipAuditLocator(
+            project.environment.interpreter.executable, None
+        )
 
 
 class _PipAuditNotFoundError(Exception):
@@ -205,7 +238,7 @@ class PipAuditExecutor(Executor, CliRunnerMixin):
     def __init__(
         self,
         input_file: "Path",
-        project: "Project", 
+        project: "Project",
         verbose: "bool" = False,
         repeatable: "bool" = False,
         exit_non_zero: "bool" = False,
@@ -238,7 +271,7 @@ class PipAuditExecutor(Executor, CliRunnerMixin):
     def args(self) -> tuple[str, ...]:
         """"""
         return self.__args
-    
+
     @property
     def may_exit_non_zero(self) -> "bool":
         """"""
@@ -249,7 +282,7 @@ class PipAuditExecutor(Executor, CliRunnerMixin):
         """"""
         # Run pip_audit as python main module
         prepend_args: list[str] = ["-m", "pip_audit"]
-        
+
         arguments = prepend_args + [a for a in self.args]
         if self.__repeatable:
             arguments.append("--require-hashes")
@@ -268,9 +301,11 @@ class PipAuditExecutor(Executor, CliRunnerMixin):
             env = location.proc_env
             arguments = location.args + arguments
         except _PipAuditNotFoundError:
-            logger.error("Failed to find a python environment that supports `pip_audit` module")
+            logger.error(
+                "Failed to find a python environment that supports `pip_audit` module"
+            )
             return 125
-        
+
         arg_items = tuple(arguments)
 
         exit_code, stdout, stderr = self.run(interpreter, arg_items, env=env)
@@ -290,7 +325,8 @@ class PipAuditExecutor(Executor, CliRunnerMixin):
                     )
                     if num_vulnerabilities > 0:
                         logger.warning(
-                            "%i vulnerability hints arisen", num_vulnerabilities
+                            "%i vulnerability hints arisen",
+                            num_vulnerabilities,
                         )
                     else:
                         logger.info(
@@ -313,7 +349,7 @@ class PipAuditExecutor(Executor, CliRunnerMixin):
             logger.warning(stderr)
 
         return exit_code
-    
+
     @traced_function
     def __find_interpreters_supporting_pip_audit(self) -> "PipAuditLocator":
         for locator in [
@@ -325,10 +361,16 @@ class PipAuditExecutor(Executor, CliRunnerMixin):
             if locator is None:
                 continue
             if locator.supports_pip_audit():
-                logger.debug("'%s' supports pip_audit. Using this interpreter.", locator.interpreter)
+                logger.debug(
+                    "'%s' supports pip_audit. Using this interpreter.",
+                    locator.interpreter,
+                )
                 return locator
-            logger.debug("'%s' does not support pip_audit. Searching next ...", locator.interpreter)
-            
+            logger.debug(
+                "'%s' does not support pip_audit. Searching next ...",
+                locator.interpreter,
+            )
+
         logger.debug("No interpreter found.")
         raise _PipAuditNotFoundError()
 
