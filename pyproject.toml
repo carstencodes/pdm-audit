@@ -187,7 +187,7 @@ static-code-analysis = [
     "bandit>=1.9.2",
 ]
 test = [
-    "pytest>=8.4.2",
+    "pytest>=9.0.2",
     "tox>=4.32.0",
     "tox-pdm>=0.7.2",
     "pytest-cov>=7.0.0",
