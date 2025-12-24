@@ -5,7 +5,7 @@
 groups = ["default", "checkstyle", "formatting", "release", "static-code-analysis", "test"]
 strategy = ["inherit_metadata"]
 lock_version = "4.5.0"
-content_hash = "sha256:4195b1c83806ba2f8f2a6dcf8d2546925d65eda4389f7c63ff7adc9b6bb043b7"
+content_hash = "sha256:6f72115ad61035068824ca3c7ab35891e897e59a7ce4ca15948e305a55a6fa52"
 
 [[metadata.targets]]
 requires_python = ">=3.10"
@@ -759,20 +759,35 @@ files = [
 
 [[package]]
 name = "hishel"
-version = "0.1.5"
+version = "1.1.7"
 requires_python = ">=3.9"
-summary = "Persistent cache implementation for httpx and httpcore"
+summary = "Elegant HTTP Caching for Python"
 groups = ["default"]
 dependencies = [
-    "anyio>=4.9.0",
-    "anysqlite>=0.0.5",
-    "httpx>=0.28.0",
     "msgpack>=1.1.2",
     "typing-extensions>=4.14.1",
 ]
 files = [
-    {file = "hishel-0.1.5-py3-none-any.whl", hash = "sha256:0bfbe9a2b9342090eba82ba6de88258092e1c4c7b730cd4cb4b570e4b40e44a7"},
-    {file = "hishel-0.1.5.tar.gz", hash = "sha256:9d40c682cd94fd6e1394fb05713ae20a75ed8aeba6f5272380444039ce6257f2"},
+    {file = "hishel-1.1.7-py3-none-any.whl", hash = "sha256:436c2a5a62d705528e581cbeba85b10d130c47c861906b21262a07ac02463a9f"},
+    {file = "hishel-1.1.7.tar.gz", hash = "sha256:32c625be581e94dc50b773a8cfb9a65cba487660561950fe976ae49945455179"},
+]
+
+[[package]]
+name = "hishel"
+version = "1.1.7"
+extras = ["httpx"]
+requires_python = ">=3.9"
+summary = "Elegant HTTP Caching for Python"
+groups = ["default"]
+dependencies = [
+    "anyio>=4.9.0",
+    "anysqlite>=0.0.5",
+    "hishel==1.1.7",
+    "httpx>=0.28.1",
+]
+files = [
+    {file = "hishel-1.1.7-py3-none-any.whl", hash = "sha256:436c2a5a62d705528e581cbeba85b10d130c47c861906b21262a07ac02463a9f"},
+    {file = "hishel-1.1.7.tar.gz", hash = "sha256:32c625be581e94dc50b773a8cfb9a65cba487660561950fe976ae49945455179"},
 ]
 
 [[package]]
@@ -1193,18 +1208,18 @@ files = [
 
 [[package]]
 name = "pbs-installer"
-version = "2025.12.5"
+version = "2025.12.17"
 requires_python = ">=3.8"
 summary = "Installer for Python Build Standalone"
 groups = ["default"]
 files = [
-    {file = "pbs_installer-2025.12.5-py3-none-any.whl", hash = "sha256:1cc1977bbb8367bb3ce03a7954f58d6e765e184fd873b73674076f9e8788cd08"},
-    {file = "pbs_installer-2025.12.5.tar.gz", hash = "sha256:3d03347d73f4a58ddfbe26473b622065476633e57de44fb025527c8852e4efa7"},
+    {file = "pbs_installer-2025.12.17-py3-none-any.whl", hash = "sha256:1a899ac5af9ca4c59a7a7944ec3fcf7ad7e40d5684b12eadcfbeee7c59d44123"},
+    {file = "pbs_installer-2025.12.17.tar.gz", hash = "sha256:cf32043fadd168c17a1b18c1c3f801090281bd5c9ce101e2deb7e0e51c8279dd"},
 ]
 
 [[package]]
 name = "pdm"
-version = "2.26.2"
+version = "2.26.3"
 requires_python = ">=3.9"
 summary = "A modern Python package and dependency manager supporting the latest PEP standards"
 groups = ["default"]
@@ -1214,7 +1229,7 @@ dependencies = [
     "dep-logic>=0.5",
     "filelock>=3.13",
     "findpython<1.0.0a0,>=0.7.0",
-    "hishel<1.0.0,>=0.0.32",
+    "hishel[httpx]>=1.0.0",
     "httpcore>=1.0.6",
     "httpx[socks]<1,>0.20",
     "id>=1.5.0",
@@ -1235,8 +1250,8 @@ dependencies = [
     "virtualenv>=20",
 ]
 files = [
-    {file = "pdm-2.26.2-py3-none-any.whl", hash = "sha256:b3b0199f6eec37284192a6feb26bef21f911d45d5aa4b02323ff211752abf04b"},
-    {file = "pdm-2.26.2.tar.gz", hash = "sha256:98207f8aabd6913a25ee0b4985e79e1652e2db274915f3ccf9408e33191ede4e"},
+    {file = "pdm-2.26.3-py3-none-any.whl", hash = "sha256:6dd822dcc2db3198cc6da39f3d357bf2531f78dc3666d6607dc6d523f2d77c61"},
+    {file = "pdm-2.26.3.tar.gz", hash = "sha256:30e17ed5b1697949ac509d8c8e1ad96160eab21c88dea4f1a6cf101bdb2787e5"},
 ]
 
 [[package]]
@@ -1968,7 +1983,7 @@ files = [
 
 [[package]]
 name = "unearth"
-version = "0.18.1"
+version = "0.18.2"
 requires_python = ">=3.9"
 summary = "A utility to fetch and download python packages"
 groups = ["default"]
@@ -1977,8 +1992,8 @@ dependencies = [
     "packaging>=20",
 ]
 files = [
-    {file = "unearth-0.18.1-py3-none-any.whl", hash = "sha256:6d2dd6cd65a28cc8e13f08d7de93135bc1976078999c0f8116c42e53be0dc9ad"},
-    {file = "unearth-0.18.1.tar.gz", hash = "sha256:e8b132f73bf0dac7556a36419cb43125ced3bd172682bde1383cc5b193ccf73d"},
+    {file = "unearth-0.18.2-py3-none-any.whl", hash = "sha256:31fd55d67c0e46a1ebb78993a2010568e6c4231334a3207d18d5d4a549d8d692"},
+    {file = "unearth-0.18.2.tar.gz", hash = "sha256:1e53d7f52f46dd5f875e77ff1c55b12477e215a092e4b66c9764a77df4a9b520"},
 ]
 
 [[package]]
