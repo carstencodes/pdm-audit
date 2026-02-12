@@ -171,7 +171,7 @@ checkstyle = [
     "pep8-naming>=0.10.0",
 ]
 formatting = [
-    "black>=25.12.0",
+    "black>=26.1.0",
     "isort>=7.0.0",
     "licenseheaders>=0.8.8",
     "autoflake>=2.3.1",
