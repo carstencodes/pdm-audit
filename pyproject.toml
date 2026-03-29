@@ -183,7 +183,7 @@ release = [
 ]
 static-code-analysis = [
     "radon>=6.0.1",
-    "vulture>=2.15",
+    "vulture>=2.16",
     "bandit>=1.9.4",
 ]
 test = [
