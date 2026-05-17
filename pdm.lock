@@ -5,7 +5,7 @@
 groups = ["default", "checkstyle", "formatting", "release", "static-code-analysis", "test"]
 strategy = ["inherit_metadata"]
 lock_version = "4.5.0"
-content_hash = "sha256:05adaed0f799cdd97add750cf840bfeb4a235c926928103f955b69e785c8bbb0"
+content_hash = "sha256:b5c7458240cd11e5e514020478f9ad458d9e69ee16fde74949669f4bfd0063fc"
 
 [[metadata.targets]]
 requires_python = ">=3.10"
@@ -201,13 +201,13 @@ files = [
 
 [[package]]
 name = "cachetools"
-version = "7.0.5"
+version = "7.1.2"
 requires_python = ">=3.10"
 summary = "Extensible memoizing collections and decorators"
 groups = ["test"]
 files = [
-    {file = "cachetools-7.0.5-py3-none-any.whl", hash = "sha256:46bc8ebefbe485407621d0a4264b23c080cedd913921bad7ac3ed2f26c183114"},
-    {file = "cachetools-7.0.5.tar.gz", hash = "sha256:0cd042c24377200c1dcd225f8b7b12b0ca53cc2c961b43757e774ebe190fd990"},
+    {file = "cachetools-7.1.2-py3-none-any.whl", hash = "sha256:89386be5bece29963e0f22bb7e1aba91c8395c7ad107780e2ce7af3ab315ae40"},
+    {file = "cachetools-7.1.2.tar.gz", hash = "sha256:c1373e3cad0933dfb46bb04d04ef67b5204f8220eb906096dd89a76196053d57"},
 ]
 
 [[package]]
@@ -2060,7 +2060,7 @@ files = [
 
 [[package]]
 name = "tox"
-version = "4.53.0"
+version = "4.54.0"
 requires_python = ">=3.10"
 summary = "tox is a generic virtualenv management and test command line tool"
 groups = ["test"]
@@ -2079,8 +2079,8 @@ dependencies = [
     "virtualenv>=21.1",
 ]
 files = [
-    {file = "tox-4.53.0-py3-none-any.whl", hash = "sha256:cc4e716d18c4889aa179d785175c438fa60c35deef20ce689ec288d8fb656096"},
-    {file = "tox-4.53.0.tar.gz", hash = "sha256:62c780e42f87d34ee60f2ea20342156253794fdcbd6885fd797d98ee05009f22"},
+    {file = "tox-4.54.0-py3-none-any.whl", hash = "sha256:a2d7c1177242ae9c3d9e404039e9f945ce16a3e5dfc66972c643e27d7e764f4b"},
+    {file = "tox-4.54.0.tar.gz", hash = "sha256:21e36fd8256590379620848d0b03b52f4d541b65b749de1a17c3e616978dad58"},
 ]
 
 [[package]]
