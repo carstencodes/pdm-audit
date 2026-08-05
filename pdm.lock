@@ -5,7 +5,7 @@
 groups = ["default", "checkstyle", "formatting", "release", "static-code-analysis", "test"]
 strategy = ["inherit_metadata"]
 lock_version = "4.5.0"
-content_hash = "sha256:54d3cc9de1e61ec07c138e5a668ae43c7c2b9f8d14e1aa9838d7778d44cbcb66"
+content_hash = "sha256:ac8661b2019de954af12baef79aa707cfce520518ab15bb4c3c739abb6b396d4"
 
 [[metadata.targets]]
 requires_python = ">=3.10"
@@ -1395,13 +1395,13 @@ files = [
 
 [[package]]
 name = "pip"
-version = "26.2"
+version = "26.2.1"
 requires_python = ">=3.10"
 summary = "The PyPA recommended tool for installing Python packages."
 groups = ["default", "release"]
 files = [
-    {file = "pip-26.2-py3-none-any.whl", hash = "sha256:931c303696af6fa3417112103b1cad26890e5a07eccb5b99783700e33f2b8aad"},
-    {file = "pip-26.2.tar.gz", hash = "sha256:2d8542afcc84cdd8e846c2b36b2861fad1da376dd98f8e7113e9108a3c331690"},
+    {file = "pip-26.2.1-py3-none-any.whl", hash = "sha256:71138adf1f4ca900cdb7d289c21b7494329f2332b6d85f0e1c42108c0384ed3e"},
+    {file = "pip-26.2.1.tar.gz", hash = "sha256:f6ad667e89a1fe78046c8f13232b247200f5258d7828f3f7883d660878e0813f"},
 ]
 
 [[package]]
