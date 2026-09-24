@@ -5,7 +5,7 @@
 groups = ["default", "checkstyle", "formatting", "release", "static-code-analysis", "test"]
 strategy = ["inherit_metadata"]
 lock_version = "4.5.1"
-content_hash = "sha256:a46828f459949dce13397be9b3b3c5d361aa74bd4e58e82b947762e7a1eace08"
+content_hash = "sha256:0320d17788a985262b96adc21e67435a7afca582bc61f361fad4bc970c1f48d2"
 
 [[metadata.targets]]
 requires_python = ">=3.10"
@@ -788,7 +788,7 @@ files = [
 
 [[package]]
 name = "flake8"
-version = "7.4.0"
+version = "7.4.1"
 requires_python = ">=3.10"
 summary = "the modular source code checker: pep8 pyflakes and co"
 groups = ["checkstyle"]
@@ -798,8 +798,8 @@ dependencies = [
     "pyflakes<4.1.0,>=4.0.0",
 ]
 files = [
-    {file = "flake8-7.4.0-py2.py3-none-any.whl", hash = "sha256:7c8d371b6d1a2d0c1f9cdf9f865c91f16f880e6cf7b1da0fcfaba31006532f38"},
-    {file = "flake8-7.4.0.tar.gz", hash = "sha256:d3e0beb3d152209b4dc50fa5e3132844bf4ee4ff994cec87d6913d06b8eb5afc"},
+    {file = "flake8-7.4.1-py2.py3-none-any.whl", hash = "sha256:78480274a6d7289d9cb8eafeda241fac57d4ea687d26e32dfdca37b72cdeddad"},
+    {file = "flake8-7.4.1.tar.gz", hash = "sha256:84ea5afcaf344487b0ea5baaebb8100f4cfaebc01f755998f75876664029f587"},
 ]
 
 [[package]]
