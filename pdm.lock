@@ -5,7 +5,7 @@
 groups = ["default", "checkstyle", "formatting", "release", "static-code-analysis", "test"]
 strategy = ["inherit_metadata"]
 lock_version = "4.5.1"
-content_hash = "sha256:c3273fe2b9edaf915f18589618728d719895b08fc96ffa101af551465b237ef1"
+content_hash = "sha256:005d0610a1323114256890a5d661f157f15b7ce3121a72a206a493b07d80064d"
 
 [[metadata.targets]]
 requires_python = ">=3.11"
@@ -289,13 +289,13 @@ files = [
 
 [[package]]
 name = "certifi"
-version = "2026.10.19"
+version = "2026.10.23"
 requires_python = ">=3.7"
 summary = "Python package for providing Mozilla's CA Bundle."
 groups = ["default", "release"]
 files = [
-    {file = "certifi-2026.10.19-py3-none-any.whl", hash = "sha256:42d35340cc5b9ba78e818ddbff0c5b1c2b779de448a340fd1b989f5fa8670e1b"},
-    {file = "certifi-2026.10.19.tar.gz", hash = "sha256:035c1e85572b141bf1c3a3eff0e33a8eb74917522f2559075ff8d2fea780a1ae"},
+    {file = "certifi-2026.10.23-py3-none-any.whl", hash = "sha256:e9b54de76e530bb6cf0ccd036787103acb58fd42ba930ea8bf948ddbaa2f61d1"},
+    {file = "certifi-2026.10.23.tar.gz", hash = "sha256:a9895e6e2758b371e0545e321a3a8fd1fcfd9829ada8824a936dfb16aaaf36cd"},
 ]
 
 [[package]]
@@ -744,8 +744,8 @@ files = [
 
 [[package]]
 name = "findpython"
-version = "0.8.0"
-requires_python = ">=3.9"
+version = "0.9.0"
+requires_python = ">=3.10"
 summary = "A utility to find python versions on your system"
 groups = ["default"]
 dependencies = [
@@ -753,8 +753,8 @@ dependencies = [
     "platformdirs>=4.3.6",
 ]
 files = [
-    {file = "findpython-0.8.0-py3-none-any.whl", hash = "sha256:4a61ee1618a8b55014f7d41f59345d322be93f6ce62395bdccccc651b3f7e28a"},
-    {file = "findpython-0.8.0.tar.gz", hash = "sha256:53b32264874dfa5990bd09d717819386d8db3149d89fe20f88fe1078de286bae"},
+    {file = "findpython-0.9.0-py3-none-any.whl", hash = "sha256:0d58e63106cab47a48793cc7b51faba3956caa46b3b8043c92d738bfef5e2a33"},
+    {file = "findpython-0.9.0.tar.gz", hash = "sha256:497c6b5eb13734be2542dfb6a93267946339601cbc2f1138c8cd4d40311fefe5"},
 ]
 
 [[package]]
@@ -843,6 +843,7 @@ version = "0.16.0"
 requires_python = ">=3.8"
 summary = "A pure-Python, bring-your-own-I/O implementation of HTTP/1.1"
 groups = ["default"]
+marker = "sys_platform != \"emscripten\""
 files = [
     {file = "h11-0.16.0-py3-none-any.whl", hash = "sha256:63cf8bbe7522de3bf65932fda1d9c2772064ffb3dae62d55932da54b31cb6c86"},
     {file = "h11-0.16.0.tar.gz", hash = "sha256:4e35b956cf45792e4caa5885e69fba00bdbc6ffafbfa020300e549b208ee5ff1"},
@@ -866,7 +867,7 @@ files = [
 [[package]]
 name = "hishel"
 version = "1.4.0"
-extras = ["httpx"]
+extras = ["httpx2"]
 requires_python = ">=3.10"
 summary = "Elegant HTTP Caching for Python"
 groups = ["default"]
@@ -874,7 +875,7 @@ dependencies = [
     "anyio>=4.9.0",
     "anysqlite>=0.0.5",
     "hishel==1.4.0",
-    "httpx>=0.28.1",
+    "httpx2>=2.9.1",
 ]
 files = [
     {file = "hishel-1.4.0-py3-none-any.whl", hash = "sha256:38cb62d7d38fb437dc086f789c26d0cab41310d12497ec3f56dcead4b08571f0"},
@@ -882,51 +883,66 @@ files = [
 ]
 
 [[package]]
-name = "httpcore"
-version = "1.0.9"
-requires_python = ">=3.8"
+name = "httpcore2"
+version = "2.16.0"
+requires_python = ">=3.11"
 summary = "A minimal low-level HTTP client."
 groups = ["default"]
+marker = "sys_platform != \"emscripten\""
 dependencies = [
-    "certifi",
     "h11>=0.16",
+    "truststore>=0.10",
 ]
 files = [
-    {file = "httpcore-1.0.9-py3-none-any.whl", hash = "sha256:2d400746a40668fc9dec9810239072b40b4484b640a8c38fd654a024c7a1bf55"},
-    {file = "httpcore-1.0.9.tar.gz", hash = "sha256:6e34463af53fd2ab5d807f399a9b45ea31c3dfa2276f15a2c3f00afff6e176e8"},
+    {file = "httpcore2-2.16.0-py3-none-any.whl", hash = "sha256:5c4358319f2602d984ad93182c9fee5160f22e9da7babdda870a5e7c4e2dc34f"},
+    {file = "httpcore2-2.16.0.tar.gz", hash = "sha256:c72cd0413563b17e1cd8354677dff887466f8ec2551679759e93126534428643"},
 ]
 
 [[package]]
-name = "httpx"
-version = "0.28.1"
-requires_python = ">=3.8"
+name = "httpx2"
+version = "2.16.0"
+requires_python = ">=3.11"
 summary = "The next generation HTTP client."
 groups = ["default"]
 dependencies = [
-    "anyio",
-    "certifi",
-    "httpcore==1.*",
-    "idna",
+    "anyio>=4.10; sys_platform != \"emscripten\"",
+    "httpcore2==2.16.0; sys_platform != \"emscripten\"",
+    "httpx2-jsfetch; sys_platform == \"emscripten\" and python_version >= \"3.12\"",
+    "idna>=3.18",
+    "truststore>=0.10; sys_platform != \"emscripten\"",
+    "typing-extensions>=4.5.0; python_version < \"3.13\"",
 ]
 files = [
-    {file = "httpx-0.28.1-py3-none-any.whl", hash = "sha256:d909fcccc110f8c7faf814ca82a9a4d816bc5a6dbfea25d6591d6985b8ba59ad"},
-    {file = "httpx-0.28.1.tar.gz", hash = "sha256:75e98c5f16b0f35b567856f597f06ff2270a374470a5c2392242528e3e3e42fc"},
+    {file = "httpx2-2.16.0-py3-none-any.whl", hash = "sha256:fd2c5d7909e8d86fe92d53020c310ca0e4e431b838c207c5754b9bbf0308d49a"},
+    {file = "httpx2-2.16.0.tar.gz", hash = "sha256:0d54c98128e8f2ff7fbbde0fca8c359e5f032edeaaaac443cdb7f31f685bcd7f"},
 ]
 
 [[package]]
-name = "httpx"
-version = "0.28.1"
+name = "httpx2-jsfetch"
+version = "1.0"
+requires_python = ">=3.12"
+summary = "httpx2 transports for Emscripten/Pyodide, backed by the JavaScript fetch API."
+groups = ["default"]
+marker = "sys_platform == \"emscripten\" and python_version >= \"3.12\""
+files = [
+    {file = "httpx2_jsfetch-1.0-py3-none-any.whl", hash = "sha256:cb916b707601e69a07721aabc8f3f6659be3a6893bc1ff5c6f9e02241df2da32"},
+    {file = "httpx2_jsfetch-1.0.tar.gz", hash = "sha256:70a0e3eabfef7cce5ad9c629f7d01ca05e418f586646f4ddf14782e4c1454c60"},
+]
+
+[[package]]
+name = "httpx2"
+version = "2.16.0"
 extras = ["socks"]
-requires_python = ">=3.8"
+requires_python = ">=3.11"
 summary = "The next generation HTTP client."
 groups = ["default"]
 dependencies = [
-    "httpx==0.28.1",
+    "httpx2==2.16.0",
     "socksio==1.*",
 ]
 files = [
-    {file = "httpx-0.28.1-py3-none-any.whl", hash = "sha256:d909fcccc110f8c7faf814ca82a9a4d816bc5a6dbfea25d6591d6985b8ba59ad"},
-    {file = "httpx-0.28.1.tar.gz", hash = "sha256:75e98c5f16b0f35b567856f597f06ff2270a374470a5c2392242528e3e3e42fc"},
+    {file = "httpx2-2.16.0-py3-none-any.whl", hash = "sha256:fd2c5d7909e8d86fe92d53020c310ca0e4e431b838c207c5754b9bbf0308d49a"},
+    {file = "httpx2-2.16.0.tar.gz", hash = "sha256:0d54c98128e8f2ff7fbbde0fca8c359e5f032edeaaaac443cdb7f31f685bcd7f"},
 ]
 
 [[package]]
@@ -1408,35 +1424,50 @@ files = [
 
 [[package]]
 name = "pbs-installer"
-version = "2026.10.13"
-requires_python = ">=3.9"
+version = "2026.10.25"
+requires_python = ">=3.10"
 summary = "Installer for Python Build Standalone"
 groups = ["default"]
 files = [
-    {file = "pbs_installer-2026.10.13-py3-none-any.whl", hash = "sha256:3308621cdd55a56e064b5fc544d3e6fa90e77991906292c6111b3ef5b9e8d625"},
-    {file = "pbs_installer-2026.10.13.tar.gz", hash = "sha256:888654540e18a358f0dd1d20838fa7231f47a2b11dd803f457148cda88cabe6a"},
+    {file = "pbs_installer-2026.10.25-py3-none-any.whl", hash = "sha256:19158e6fe4c941a230fdd017e48562ccea8a1d9320d9ffb30b38826d516b375b"},
+    {file = "pbs_installer-2026.10.25.tar.gz", hash = "sha256:d7cfcc37f15f55926d51b93e5275cca548e2d91fe530109f56258bc3aa754ea9"},
+]
+
+[[package]]
+name = "pbs-installer"
+version = "2026.10.25"
+extras = ["download"]
+requires_python = ">=3.10"
+summary = "Installer for Python Build Standalone"
+groups = ["default"]
+dependencies = [
+    "httpx2<3,>=2.14.0",
+    "pbs-installer==2026.10.25",
+]
+files = [
+    {file = "pbs_installer-2026.10.25-py3-none-any.whl", hash = "sha256:19158e6fe4c941a230fdd017e48562ccea8a1d9320d9ffb30b38826d516b375b"},
+    {file = "pbs_installer-2026.10.25.tar.gz", hash = "sha256:d7cfcc37f15f55926d51b93e5275cca548e2d91fe530109f56258bc3aa754ea9"},
 ]
 
 [[package]]
 name = "pdm"
-version = "2.29.3"
+version = "2.29.5"
 requires_python = ">=3.10"
 summary = "A modern Python package and dependency manager supporting the latest PEP standards"
 groups = ["default"]
 dependencies = [
     "argcomplete>=3.6.3",
     "blinker",
-    "certifi>=2024.8.30",
+    "certifi>=2026.10.19",
     "dep-logic>=0.5",
     "filelock>=3.13",
     "findpython<1.0.0a0,>=0.7.0",
-    "hishel[httpx]>=1.0.0",
-    "httpcore>=1.0.6",
-    "httpx[socks]<1,>0.20",
+    "hishel[httpx2]>=1.4.0",
+    "httpx2[socks]<3,>=2.9.1",
     "id>=1.5.0",
     "installer>=1",
     "packaging>22.0",
-    "pbs-installer>=2025.10.7",
+    "pbs-installer[download]>=2026.10.25",
     "platformdirs",
     "pyproject-hooks",
     "python-dotenv>=0.15",
@@ -1446,12 +1477,12 @@ dependencies = [
     "tomli>=1.1.0; python_version < \"3.11\"",
     "tomlkit<1,>=0.11.1",
     "truststore>=0.10.4",
-    "unearth>=0.17.5",
+    "unearth>=0.19",
     "virtualenv>=20",
 ]
 files = [
-    {file = "pdm-2.29.3-py3-none-any.whl", hash = "sha256:435af88abb9e8d17b40ae9b50d123c8f9b1d8572987129e0a9a4017fbe4d9e1b"},
-    {file = "pdm-2.29.3.tar.gz", hash = "sha256:320df1661a60a4e29ce813992dcd5c8c5583c1bf27d36b713895cf38f4c49e9e"},
+    {file = "pdm-2.29.5-py3-none-any.whl", hash = "sha256:78f6efa8359735002b6331183af7c4004098361d360843f0d54a5a6f92c8d9f3"},
+    {file = "pdm-2.29.5.tar.gz", hash = "sha256:39048cbf7f34cf586e2905b99a05f633fc892753d443181151787725542ee19c"},
 ]
 
 [[package]]
@@ -1547,13 +1578,13 @@ files = [
 
 [[package]]
 name = "platformdirs"
-version = "4.13.5"
+version = "4.14.0"
 requires_python = ">=3.11"
 summary = "A small Python package for determining appropriate platform-specific dirs, e.g. a `user data dir`."
 groups = ["default", "checkstyle", "formatting", "release", "test"]
 files = [
-    {file = "platformdirs-4.13.5-py3-none-any.whl", hash = "sha256:53d3ec4280b815c1e0b02edad7f9ee8fda1ba9c0865dd9c2e6e63849ce82fc1e"},
-    {file = "platformdirs-4.13.5.tar.gz", hash = "sha256:05831adf87d392760f4b5c3a0a95579ab5a10b18b9b9bd43680dcb47544788a0"},
+    {file = "platformdirs-4.14.0-py3-none-any.whl", hash = "sha256:1dadfc59a8a5d7565b3d9270ae8fa71c065595352c4277b41c11ee6c222c4b91"},
+    {file = "platformdirs-4.14.0.tar.gz", hash = "sha256:83f009c1e8c5fc36869b5171755b291887bd2cade7965233cdfabd23d754720b"},
 ]
 
 [[package]]
@@ -1750,7 +1781,7 @@ files = [
 
 [[package]]
 name = "python-discovery"
-version = "1.6.4"
+version = "1.6.7"
 requires_python = ">=3.9"
 summary = "Python interpreter discovery"
 groups = ["default", "test"]
@@ -1758,8 +1789,8 @@ dependencies = [
     "filelock>=3.16.1",
 ]
 files = [
-    {file = "python_discovery-1.6.4-py3-none-any.whl", hash = "sha256:530179cc51a1816d512b15635b3dc931295ae12efb183783ad31190a5d425d2b"},
-    {file = "python_discovery-1.6.4.tar.gz", hash = "sha256:bc70d31f0ec5de11eda13d4d64c16e24b3506a65984684f2b6c98cb83b2ea9df"},
+    {file = "python_discovery-1.6.7-py3-none-any.whl", hash = "sha256:5422f67e5f533bb02d7b73de1c422ed74037536fd869e05156c07565926ec68e"},
+    {file = "python_discovery-1.6.7.tar.gz", hash = "sha256:7f7c28568c8ec3d988d8bddbdbec8e65f08e8767e52f734e18b8b498549b9b70"},
 ]
 
 [[package]]
@@ -2284,17 +2315,17 @@ files = [
 
 [[package]]
 name = "unearth"
-version = "0.18.3"
-requires_python = ">=3.9"
+version = "0.19.0"
+requires_python = ">=3.10"
 summary = "A utility to fetch and download python packages"
 groups = ["default"]
 dependencies = [
-    "httpx<1,>=0.27.0",
+    "httpx2<3,>=2.0",
     "packaging>=20",
 ]
 files = [
-    {file = "unearth-0.18.3-py3-none-any.whl", hash = "sha256:306773b7a792af7d44b3b2a3bea21ba63a0b947546ad8ee793194fd09a6ae020"},
-    {file = "unearth-0.18.3.tar.gz", hash = "sha256:14067cf1141c906f787d6d9d070cbcfdd443fd1058aecaa650ce9519aa10dbdc"},
+    {file = "unearth-0.19.0-py3-none-any.whl", hash = "sha256:f12c65341303ece9bee986db35ac8aa0d17df4fa000c728a76c8c3798b1f4cf1"},
+    {file = "unearth-0.19.0.tar.gz", hash = "sha256:d85a7b164833c1dc8532a590043cbd7159f6ad2b91fc3e74f2a16ff25ed098c8"},
 ]
 
 [[package]]
@@ -2310,7 +2341,7 @@ files = [
 
 [[package]]
 name = "virtualenv"
-version = "21.14.11"
+version = "21.15.1"
 requires_python = ">=3.9"
 summary = "Virtual Python Environment builder"
 groups = ["default", "test"]
@@ -2324,8 +2355,8 @@ dependencies = [
     "typing-extensions>=4.16; python_version < \"3.11\"",
 ]
 files = [
-    {file = "virtualenv-21.14.11-py3-none-any.whl", hash = "sha256:b319f8590a84e5de5f8f2c803ecd2237e9bc0ffa7c1e875e3169c107cecb7454"},
-    {file = "virtualenv-21.14.11.tar.gz", hash = "sha256:593052d8477ea8c55a842387ce111bd08c72618f0c1133c302cafe335e570a57"},
+    {file = "virtualenv-21.15.1-py3-none-any.whl", hash = "sha256:0d14a991689c67600316880eadc0a37b7690cb632e3b4ac67e2bc05b2b2e24a4"},
+    {file = "virtualenv-21.15.1.tar.gz", hash = "sha256:e79c90b8f601701599c25905e02839924fede2c798d52325670d24fbdaab74ee"},
 ]
 
 [[package]]
