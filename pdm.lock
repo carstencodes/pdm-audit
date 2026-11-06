@@ -5,7 +5,7 @@
 groups = ["default", "checkstyle", "formatting", "release", "static-code-analysis", "test"]
 strategy = ["inherit_metadata"]
 lock_version = "4.5.1"
-content_hash = "sha256:ad71d49fa32db929b431f1b320647535c3423e497bfa72225da2b162f0a48046"
+content_hash = "sha256:0fdfad7340dced7400751f2d1068703df4e763d605d983a3a9db2d8532075031"
 
 [[metadata.targets]]
 requires_python = ">=3.11"
@@ -278,13 +278,13 @@ files = [
 
 [[package]]
 name = "cachetools"
-version = "7.2.7"
+version = "7.3.0"
 requires_python = ">=3.10"
 summary = "Extensible memoizing collections and decorators"
 groups = ["test"]
 files = [
-    {file = "cachetools-7.2.7-py3-none-any.whl", hash = "sha256:88e6b53373a96786d20894fed9ce623ae5b73cbc07421b7a73098db088be69ae"},
-    {file = "cachetools-7.2.7.tar.gz", hash = "sha256:e2154c809ce9e1247120258c36821467597b5663d44c3255a9790785f23c2b1e"},
+    {file = "cachetools-7.3.0-py3-none-any.whl", hash = "sha256:2105787c94619bde7072624fec0fe7b8a08bb7bf6c757c318f8925573c6f07c9"},
+    {file = "cachetools-7.3.0.tar.gz", hash = "sha256:3f63fc208410f0c3a3b37883c4903ecdacd6f0b259134e6d2e82debd5b2e01de"},
 ]
 
 [[package]]
@@ -1707,7 +1707,7 @@ files = [
 
 [[package]]
 name = "pyproject-api"
-version = "1.12.2"
+version = "1.12.4"
 requires_python = ">=3.11"
 summary = "API to interact with the python pyproject.toml based projects"
 groups = ["test"]
@@ -1715,8 +1715,8 @@ dependencies = [
     "packaging>=26.3",
 ]
 files = [
-    {file = "pyproject_api-1.12.2-py3-none-any.whl", hash = "sha256:b832f139e5b5e6a01a67e55e38603e8a99cd43556fc2f6fc5659946da25c5f54"},
-    {file = "pyproject_api-1.12.2.tar.gz", hash = "sha256:ad2a72516abcc950877222e9eff760c9120d2086f0d9fce6aef4f16985a3e946"},
+    {file = "pyproject_api-1.12.4-py3-none-any.whl", hash = "sha256:5cb6235adb84998753e3b37d50820391854a6a967914b08051fc8f534a1c12b0"},
+    {file = "pyproject_api-1.12.4.tar.gz", hash = "sha256:79d0584a851fc945150715fa7871b0d72f48000e848b2298193d160cc18b3c89"},
 ]
 
 [[package]]
@@ -1796,7 +1796,7 @@ files = [
 
 [[package]]
 name = "python-discovery"
-version = "1.9.4"
+version = "1.9.5"
 requires_python = ">=3.9"
 summary = "Python interpreter discovery"
 groups = ["default", "test"]
@@ -1804,8 +1804,8 @@ dependencies = [
     "filelock>=3.16.1",
 ]
 files = [
-    {file = "python_discovery-1.9.4-py3-none-any.whl", hash = "sha256:b468f365040b40f4cb39918b0766d3e5a2f340968e07df752fbc96f1bb4641ab"},
-    {file = "python_discovery-1.9.4.tar.gz", hash = "sha256:c01b45fe515c1d268b57c57d554bb0e1d320b8e9eb5490bb2f4f577be26e4380"},
+    {file = "python_discovery-1.9.5-py3-none-any.whl", hash = "sha256:a1fae8fca11e4bc61e38491c2aafff29e430b3c5e272d51ae52fb895bc4c0fac"},
+    {file = "python_discovery-1.9.5.tar.gz", hash = "sha256:86279f5d2728bc067de28b7ddc571be2eacc2ae0e7048f8629d2481a0f8848a2"},
 ]
 
 [[package]]
@@ -2269,7 +2269,7 @@ files = [
 
 [[package]]
 name = "tox"
-version = "4.67.5"
+version = "4.67.13"
 requires_python = ">=3.11"
 summary = "tox is a generic virtualenv management and test command line tool"
 groups = ["test"]
@@ -2287,8 +2287,8 @@ dependencies = [
     "virtualenv>=21.1",
 ]
 files = [
-    {file = "tox-4.67.5-py3-none-any.whl", hash = "sha256:2ce2844114ff4c50024d9bbdea19a2f3cabe66736d8cf6a3398ad9a3b3ce60fd"},
-    {file = "tox-4.67.5.tar.gz", hash = "sha256:f1872e30d89c8d18cbdf3b93c4c7dc04d4f3928c0af413e9ae5b71ba3f1c438d"},
+    {file = "tox-4.67.13-py3-none-any.whl", hash = "sha256:4d6fa08dbe5e841f2abfee1dd4f5cdf31af30d68a3d78b85a7bf57eced5f3c6c"},
+    {file = "tox-4.67.13.tar.gz", hash = "sha256:9f70b44ca2e31d91d8fe2e2917f505554950adc3961c0ee70bb42db16d903f62"},
 ]
 
 [[package]]
